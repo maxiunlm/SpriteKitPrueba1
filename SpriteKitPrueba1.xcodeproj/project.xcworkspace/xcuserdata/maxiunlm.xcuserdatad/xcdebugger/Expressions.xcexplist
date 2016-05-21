@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "GameScene.(doEnemyExplosion in _CA980AE4D159230685C0F4265B18DF31)(SKSpriteNode) -&gt; ():GameScene.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "enemyExplotion.size.width">
+            </PersistentString>
+            <PersistentString
+               value = "enemy.size.height">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameScene.didBeginContact(SKPhysicsContact) -&gt; ():GameScene.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "secondBody!.categoryBitMask">
+            </PersistentString>
+            <PersistentString
+               value = "firstBody!.categoryBitMask">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
