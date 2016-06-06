@@ -12,25 +12,33 @@ import Foundation
 import SpriteKit
 
 class GameStartScene: SKScene {
-    override func didMoveToView(view: SKView) {
-        steBackgroundImage()
-    }
-    
-    private func steBackgroundImage() {
-        let spaceBackground = SKSpriteNode(imageNamed:"menu")
-        
-        spaceBackground.zPosition = -1000
-        spaceBackground.position = CGPoint (x: CGRectGetMidX(self.frame), y: CGRectGetMidY(self.frame))
-        spaceBackground.size = CGSizeMake(CGRectGetMaxX(self.frame), CGRectGetMaxY(self.frame))
-        
-        backgroundColor = SKColor.blackColor()
-        addChild(spaceBackground)
-    }
-    
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if let scene = GameScene(fileNamed:"GameScene") {
-            let transition = SKTransition.fadeWithDuration(2)
-            self.view?.presentScene(scene, transition: transition)
-        }
-    }
+	override func didMoveToView(view: SKView) {
+		steBackgroundImage()
+		loaBackgroundSounds()
+	}
+
+	private func steBackgroundImage() {
+		let spaceBackground = SKSpriteNode(imageNamed:"menu")
+		let screenSize: CGRect = UIScreen.mainScreen().bounds;
+
+		spaceBackground.zPosition = -1000
+		spaceBackground.size = CGSizeMake(screenSize.width, screenSize.height)
+		spaceBackground.position = CGPoint(x: CGRectGetMidX(self.frame), y: CGRectGetMidY(self.frame))
+
+		backgroundColor = SKColor.blackColor()
+		addChild(spaceBackground)
+	}
+
+	private func loaBackgroundSounds() {
+		let backgroundMusic = SKAudioNode(fileNamed: "engine.wav")
+		backgroundMusic.autoplayLooped = true
+		addChild(backgroundMusic)
+	}
+
+	override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+		if let scene = GameScene(fileNamed:"GameScene") {
+			let transition = SKTransition.fadeWithDuration(2)
+			self.view?.presentScene(scene, transition: transition)
+		}
+	}
 }
