@@ -24,5 +24,16 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "GameScene.(loaBackgroundSounds in _CA980AE4D159230685C0F4265B18DF31)() -&gt; ():GameScene.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "shotSound">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameScene.(playExplotionSound in _CA980AE4D159230685C0F4265B18DF31)() -&gt; ():GameScene.swift">
+      </ContextState>
    </ContextStates>
 </VariablesViewState>
