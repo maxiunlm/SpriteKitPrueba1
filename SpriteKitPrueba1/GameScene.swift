@@ -12,12 +12,12 @@ import Darwin
 class GameScene: SKScene, SKPhysicsContactDelegate {
 	private struct PhysicsCategory {
 		static let None			: UInt32 = 0
-		static let All			: UInt32 = UInt32.max
+		static let All				: UInt32 = UInt32.max
 		static let UserShip		: UInt32 = 0b1			//  1
 		static let Shot			: UInt32 = 0b10			//  2
 		static let EnemyShot    : UInt32 = 0b100		//  4
-		static let Enemy		: UInt32 = 0b1000		//  8
-		static let UFO			: UInt32 = 0b10000		// 16
+		static let Enemy			: UInt32 = 0b1000		//  8
+		static let UFO				: UInt32 = 0b10000		// 16
 	}
 
 	private var userSpaceShip: SKSpriteNode = SKSpriteNode()
@@ -45,8 +45,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	private let shotScale:CGFloat = CGFloat(0.5)
 	private let shottingSpeed = 0.3
 	private var isShotEnabled = true
-	//private var shotSound:SKAudioNode = SKAudioNode(fileNamed: "shot.wav")
-
+	private var pointsCounter:SKLabelNode = SKLabelNode()//fontNamed:"Chalkduster")
+	private let userLifesMaxCount = 3
+	private var userLifesCounter = 3
+	private var userLifeShips:[SKSpriteNode] = []
+	private let separator = 50
+	private let menuBackName = "MenuBack"
+	private let hitsLabelText:String = "Hits:"
+	private var hitsLabelPoints:Int = 0
 	private var shipExplosionTime: NSTimeInterval = NSTimeInterval(1)
 	private var shipExplosionImages: [SKTexture] = []
 
@@ -54,20 +60,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	private let timePerFrameAnimation: NSTimeInterval = NSTimeInterval(0.025)
 
 	override func didMoveToView(view: SKView) {
-		/* Setup your scene here */
 		self.physicsWorld.gravity = CGVectorMake(0, 0)
 		self.physicsWorld.contactDelegate = self
 		self.yUserShipPosition = CGRectGetMidY(self.frame) / 4
 		self.setBackgroundImage()
 
-		let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-		myLabel.text = "Space warriors!"
-		myLabel.fontSize = 45
-		myLabel.position = CGPoint(x: CGRectGetMidX(self.frame), y: CGRectGetMidY(self.frame) * 1.55)
-
-		self.addChild(myLabel)
-		myLabel.runAction(SKAction.sequence([SKAction.waitForDuration(3.0), SKAction.fadeOutWithDuration(1), SKAction.removeFromParent()]))
-
+		self.addPointsCounter()
+		self.addMenuBack()
+		self.addUserLifes()
 		self.addSpaceShip()
 		self.loadExplosions()
 		self.addEnemyShip()
@@ -76,14 +76,55 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.loaBackgroundSounds()
 	}
 
-	private func loaBackgroundSounds() {
-//		let backgroundMusic = SKAudioNode(fileNamed: "engine.wav")
-//		backgroundMusic.autoplayLooped = true
-//		addChild(backgroundMusic)
+	private func addPointsCounter() {
+		let pointsText = NSString(format: "%03d", hitsLabelPoints)
 
-		//shotSound = SKAudioNode(fileNamed: "shot.wav")
-		//		shotSound = true
-		//addChild(shotSound)
+		pointsCounter.fontName = "Apple Color Emoji"
+		pointsCounter.text = "\(hitsLabelText) \(pointsText)"
+		pointsCounter.fontSize = 36
+		pointsCounter.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Bottom
+		pointsCounter.position = CGPoint(x: Int(CGRectGetMaxX(self.frame)) - (separator * 3), y: Int(CGRectGetMaxY(self.frame)) - separator - 5)
+
+		self.addChild(pointsCounter)
+		//myLabel.runAction(SKAction.sequence([SKAction.waitForDuration(3.0), SKAction.fadeOutWithDuration(1), SKAction.removeFromParent()]))
+	}
+
+	private func addMenuBack() {
+		let menuBack = SKLabelNode()
+
+		menuBack.fontName = "Apple Color Emoji"
+		menuBack.text = "Menu"
+		menuBack.name = menuBackName
+		menuBack.fontSize = 36
+		menuBack.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Bottom
+		menuBack.position = CGPoint(x: Int(CGRectGetMidX(self.frame)) - (separator / 2), y: Int(CGRectGetMaxY(self.frame)) - separator - 5)
+
+		self.addChild(menuBack)
+	}
+
+	private func addUserLifes(){
+		for userLifeItem in 1...userLifesMaxCount {
+			addUserLifeImage(userLifeItem)
+		}
+	}
+
+	private func addUserLifeImage(userLifeItem: Int){
+		let location = CGPoint(x: separator * userLifeItem, y: Int(CGRectGetMaxY(self.frame)) - separator)
+		let userLifeShip = SKSpriteNode(imageNamed:"UserShip")
+
+		userLifeShip.xScale = userShipScale / 2
+		userLifeShip.yScale = userShipScale / 2
+		userLifeShip.position = location
+		userLifeShip.zPosition = 1000
+
+		userLifeShips.append(userLifeShip)
+		self.addChild(userLifeShip)
+	}
+
+	private func loaBackgroundSounds() {
+		//		let backgroundMusic = SKAudioNode(fileNamed: "engine.wav")
+		//		backgroundMusic.autoplayLooped = true
+		//		addChild(backgroundMusic)
 	}
 
 	private func loadExplosions() {
@@ -123,10 +164,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 
 	override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-		/* Called when a touch begins */
-
 		for touch in touches {
 			let location = touch.locationInNode(self)
+
+			if let elementName = self.nodeAtPoint(location).name {
+				if elementName == menuBackName {
+					didMenu()
+				}
+			}
+
 			let duration: Double = abs(Double((userSpaceShip.position.x - location.x) / (CGRectGetWidth(self.frame) * 2)))
 
 			if(userSpaceShip.position.x - location.x > 0) {
@@ -143,11 +189,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		}
 	}
 
-	override func update(currentTime: CFTimeInterval) {
-		//moveEnemy()
+	private func didMenu() {
+		if let scene = GameStartScene(fileNamed:"GameStartScene") {
+			let transition = SKTransition.fadeWithDuration(2)
+			self.view?.presentScene(scene, transition: transition)
+		}
 	}
 
-	func didBeginContact(contact: SKPhysicsContact) {
+
+	override func update(currentTime: CFTimeInterval) {
+	}
+
+	internal func didBeginContact(contact: SKPhysicsContact) {
 		do {
 			var firstBody: SKPhysicsBody?
 			var secondBody: SKPhysicsBody?
@@ -196,32 +249,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 
 	private func enemyDidCollideWithShip(enemy: SKSpriteNode) {
-		//doEnemyExplosion(enemy)
 		doShipExplotion()
 		playExplotionSound()
 	}
 
 	private func playExplotionSound() {
-		//shotSound.removeFromParent()
-
-		runAction(SKAction.sequence([
-			SKAction.playSoundFileNamed("explosion.wav", waitForCompletion: true)]))
-//			,
-//		          completion: {() -> Void in
-//						self.shotSound = SKAudioNode(fileNamed: "shot.wav")
-//						self.shotSound.autoplayLooped = true
-//						self.addChild(self.shotSound)
-//			}
-//		)
+		runAction(SKAction.sequence([SKAction.playSoundFileNamed("explosion.wav", waitForCompletion: true)]))
 	}
 
 	private func ufoDidCollideWithShip(ufo: SKSpriteNode) {
-		//doUfoExplosion(ufo)
 		doShipExplotion()
 		playExplotionSound()
 	}
 
-	func doShipExplotion() {
+	private func doShipExplotion() {
 		isShotEnabled = false
 		let path = NSBundle.mainBundle().pathForResource("ShipExplotionParticle", ofType: "sks")
 		let shipExplotionParticle = NSKeyedUnarchiver.unarchiveObjectWithFile(path!) as! SKEmitterNode
@@ -233,21 +274,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 		let hiddenShipAction:SKAction = SKAction.customActionWithDuration(NSTimeInterval(shipExplosionTime), actionBlock: { (node: SKNode!, elapsedTime: CGFloat) -> Void in
 			self.userSpaceShip.position = CGPoint(x: -CGRectGetMaxX(self.frame), y: -CGRectGetMaxY(self.frame))
-			//self.userSpaceShip.runAction(SKAction.fadeOutWithDuration(1));
 		})
 		let showShipAction:SKAction = SKAction.customActionWithDuration(NSTimeInterval(shipExplosionTime), actionBlock: { (node: SKNode!, elapsedTime: CGFloat) -> Void in
 			if(elapsedTime >= CGFloat(self.shipExplosionTime) && elapsedTime > CGFloat(self.shottingSpeed) * 2) {
 				self.userSpaceShip.position = CGPoint(x: CGRectGetMidX(self.frame), y: self.yUserShipPosition)
-				//self.userSpaceShip.runAction(SKAction.fadeOutWithDuration(1));
-
 				self.isShotEnabled = true
 				self.addShot();
 			}
 		})
 		self.addChild(shipExplotionParticle)
+		self.removeUserLife()
 
 		shipExplotionParticle.runAction(SKAction.sequence([hiddenShipAction, SKAction.waitForDuration(1), showShipAction, SKAction.removeFromParent()]))
-		//userSpaceShip.runAction(SKAction.fadeInWithDuration(1));
+	}
+
+	private func removeUserLife() {
+		userLifesCounter -= 1
+
+		if(userLifesCounter >= 0) {
+			userLifeShips[userLifesCounter].runAction(SKAction.fadeOutWithDuration(1))
+		}
+		else {
+			didLose()
+		}
+	}
+
+	private func didLose() {
+		if let scene = GameLostScene(fileNamed:"GameLostScene") {
+			let transition = SKTransition.fadeWithDuration(2)
+			self.view?.presentScene(scene, transition: transition)
+		}
 	}
 
 	private func projectileDidCollideWithUFO(shot: SKSpriteNode, ufo: SKSpriteNode) {
@@ -277,7 +333,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.addChild(fakeUfoShip)
 
 		fakeUfoShip.runAction(SKAction.fadeOutWithDuration(0.35), completion: {() -> Void in
-			//self.addUfoShip()
 			fakeUfoShip.hidden = true
 			fakeUfoShip.removeFromParent()
 		})
@@ -295,6 +350,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			ufoExplotion.removeFromParent()
 			self.addUfoShip()
 		})
+
+		ufoHitted()
+	}
+
+	private func ufoHitted() {
+		self.addPointsToHits(3)
+		self.didWon()
+	}
+
+	private func addPointsToHits(points:Int) {
+		hitsLabelPoints += points
+		let pointsText = NSString(format: "%03d", hitsLabelPoints)
+
+		pointsCounter.text = "\(hitsLabelText) \(pointsText)"
+	}
+
+	private func didWon() {
+		if(hitsLabelPoints >= 100) {
+			if let scene = GameWonScene(fileNamed:"GameWonScene") {
+				let transition = SKTransition.fadeWithDuration(2)
+				self.view?.presentScene(scene, transition: transition)
+			}
+		}
 	}
 
 	private func projectileDidCollideWithEnemy(shot: SKSpriteNode, enemy: SKSpriteNode) throws {
@@ -324,7 +402,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.addChild(falseEnemyShip)
 
 		falseEnemyShip.runAction(SKAction.fadeOutWithDuration(0.35), completion: {() -> Void in
-			//self.addEnemyShip()
 			falseEnemyShip.removeFromParent()
 		})
 
@@ -341,6 +418,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			enemyExplotion.removeFromParent()
 			self.addEnemyShip()
 		})
+
+		enemyHitted()
+	}
+
+	private func enemyHitted() {
+		self.addPointsToHits(1)
+		self.didWon()
 	}
 
 	private func addSpaceShip() {
@@ -350,7 +434,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		userSpaceShip.xScale = userShipScale
 		userSpaceShip.yScale = userShipScale
 		userSpaceShip.position = location
-		//userSpaceShip.hidden = true
 		userSpaceShip.zPosition = 500
 
 		userSpaceShip.physicsBody = SKPhysicsBody(circleOfRadius: userSpaceShip.size.width / 2)
@@ -361,8 +444,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		userSpaceShip.physicsBody?.usesPreciseCollisionDetection = true
 
 		self.addChild(userSpaceShip)
-		//userSpaceShip.hidden = false
-		//userSpaceShip.runAction(SKAction.sequence([SKAction.waitForDuration(1.0),SKAction.fadeInWithDuration(1)]))
 	}
 
 	private func addShot() {
@@ -395,16 +476,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		if(isShotEnabled) {
 			self.runAction(SKAction.sequence([ SKAction.waitForDuration(shottingSpeed), anotherShotAction]))
 		}
-
-//		shotSound.removeFromParent()
-//		shotSound.s
-//		shotSound = SKAudioNode(fileNamed: "shot.wav")
-//		addChild(shotSound)
 	}
 
 	private func addUfoShip() {
 		let yPosition: CGFloat = random(min: CGRectGetMidY(self.frame) - 50, max: CGRectGetMaxY(self.frame) + 150)
-		let location = CGPoint(x: CGRectGetMinX(self.frame), y: yPosition)
+		let location = CGPoint(x: CGRectGetMinX(self.frame) - 50, y: yPosition)
 		let ufoShip: SKSpriteNode = SKSpriteNode(imageNamed:"UFOShip")
 
 		ufoShip.xScale = ufoShipScale
@@ -442,7 +518,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 	private func addEnemyShip() {
 		let xPosition: CGFloat = random(min: CGRectGetMinX(self.frame) + 22, max: CGRectGetMaxX(self.frame) - 22)
-		let location = CGPoint(x: xPosition, y: CGRectGetMaxY(self.frame))
+		let location = CGPoint(x: xPosition, y: CGRectGetMaxY(self.frame) + 50)
 		let enemyShip: SKSpriteNode = SKSpriteNode(imageNamed:"EnemyShip")
 		let toYDestination = CGRectGetMinY(self.frame) - CGRectGetMidY(self.frame) / 3;
 
@@ -480,7 +556,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	private func random() -> CGFloat {
 		return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
 	}
-
+	
 	private func random(min min: CGFloat, max: CGFloat) -> CGFloat {
 		return random() * (max - min) + min
 	}

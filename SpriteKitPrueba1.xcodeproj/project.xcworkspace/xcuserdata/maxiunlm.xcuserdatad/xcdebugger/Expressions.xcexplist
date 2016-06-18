@@ -33,6 +33,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "GLOBAL">
+         <PersistentStrings>
+            <PersistentString
+               value = "hitsLabelText">
+            </PersistentString>
+            <PersistentString
+               value = "UIFont.familyNames()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "GameScene.(playExplotionSound in _CA980AE4D159230685C0F4265B18DF31)() -&gt; ():GameScene.swift">
       </ContextState>
    </ContextStates>

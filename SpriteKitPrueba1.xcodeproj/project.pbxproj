@@ -19,6 +19,10 @@
 		AD9438E31CE3F69000196F7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD9438E11CE3F69000196F7D /* LaunchScreen.storyboard */; };
 		AD9438EE1CE3F69000196F7D /* SpriteKitPrueba1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9438ED1CE3F69000196F7D /* SpriteKitPrueba1Tests.swift */; };
 		AD9438F91CE3F69100196F7D /* SpriteKitPrueba1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9438F81CE3F69100196F7D /* SpriteKitPrueba1UITests.swift */; };
+		ADB67ADF1D0F7CE000E9DEB0 /* GameLostScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADB67ADE1D0F7CE000E9DEB0 /* GameLostScene.sks */; };
+		ADB67AE11D0F7DCB00E9DEB0 /* GameLostScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB67AE01D0F7DCB00E9DEB0 /* GameLostScene.swift */; };
+		ADB67AE31D0F7F4400E9DEB0 /* GameWonScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB67AE21D0F7F4400E9DEB0 /* GameWonScene.swift */; };
+		ADB67AE51D0F7F5C00E9DEB0 /* GameWonScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADB67AE41D0F7F5C00E9DEB0 /* GameWonScene.sks */; };
 		ADCF42691CFB99C30088D102 /* GameStartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCF42681CFB99C30088D102 /* GameStartScene.swift */; };
 		ADCF426B1CFBA1370088D102 /* GameStartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADCF426A1CFBA1370088D102 /* GameStartScene.sks */; };
 		ADFE1F371CED419300786423 /* ShipExplotionParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADFE1F351CED419300786423 /* ShipExplotionParticle.sks */; };
@@ -61,6 +65,10 @@
 		AD9438F41CE3F69100196F7D /* SpriteKitPrueba1UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpriteKitPrueba1UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD9438F81CE3F69100196F7D /* SpriteKitPrueba1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitPrueba1UITests.swift; sourceTree = "<group>"; };
 		AD9438FA1CE3F69100196F7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADB67ADE1D0F7CE000E9DEB0 /* GameLostScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameLostScene.sks; sourceTree = "<group>"; };
+		ADB67AE01D0F7DCB00E9DEB0 /* GameLostScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLostScene.swift; sourceTree = "<group>"; };
+		ADB67AE21D0F7F4400E9DEB0 /* GameWonScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWonScene.swift; sourceTree = "<group>"; };
+		ADB67AE41D0F7F5C00E9DEB0 /* GameWonScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameWonScene.sks; sourceTree = "<group>"; };
 		ADCF42681CFB99C30088D102 /* GameStartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStartScene.swift; sourceTree = "<group>"; };
 		ADCF426A1CFBA1370088D102 /* GameStartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameStartScene.sks; sourceTree = "<group>"; };
 		ADFE1F351CED419300786423 /* ShipExplotionParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = ShipExplotionParticle.sks; path = Assets.xcassets/ShipExplotionParticle.sks; sourceTree = "<group>"; };
@@ -138,6 +146,10 @@
 				ADFE1F361CED419300786423 /* spark.png */,
 				ADCF42681CFB99C30088D102 /* GameStartScene.swift */,
 				ADCF426A1CFBA1370088D102 /* GameStartScene.sks */,
+				ADB67ADE1D0F7CE000E9DEB0 /* GameLostScene.sks */,
+				ADB67AE01D0F7DCB00E9DEB0 /* GameLostScene.swift */,
+				ADB67AE21D0F7F4400E9DEB0 /* GameWonScene.swift */,
+				ADB67AE41D0F7F5C00E9DEB0 /* GameWonScene.sks */,
 			);
 			path = SpriteKitPrueba1;
 			sourceTree = "<group>";
@@ -267,10 +279,12 @@
 				AD29AE501CF23E480051B3DC /* explosion.wav in Resources */,
 				AD29AE4C1CF23B280051B3DC /* engine.wav in Resources */,
 				AD9438D71CE3F69000196F7D /* GameScene.sks in Resources */,
+				ADB67AE51D0F7F5C00E9DEB0 /* GameWonScene.sks in Resources */,
 				ADFE1F381CED419300786423 /* spark.png in Resources */,
 				AD9438E31CE3F69000196F7D /* LaunchScreen.storyboard in Resources */,
 				AD9438DE1CE3F69000196F7D /* Main.storyboard in Resources */,
 				AD29AE4E1CF23B280051B3DC /* shot.wav in Resources */,
+				ADB67ADF1D0F7CE000E9DEB0 /* GameLostScene.sks in Resources */,
 				ADFE1F371CED419300786423 /* ShipExplotionParticle.sks in Resources */,
 				ADCF426B1CFBA1370088D102 /* GameStartScene.sks in Resources */,
 				AD09C9271CE6920D0093AB6B /* Assets.xcassets in Resources */,
@@ -301,7 +315,9 @@
 				AD9438D91CE3F69000196F7D /* GameScene.swift in Sources */,
 				ADCF42691CFB99C30088D102 /* GameStartScene.swift in Sources */,
 				AD9438DB1CE3F69000196F7D /* GameViewController.swift in Sources */,
+				ADB67AE31D0F7F4400E9DEB0 /* GameWonScene.swift in Sources */,
 				AD9438D51CE3F69000196F7D /* AppDelegate.swift in Sources */,
+				ADB67AE11D0F7DCB00E9DEB0 /* GameLostScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
