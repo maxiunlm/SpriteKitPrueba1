@@ -18,10 +18,9 @@ class GameLostScene: SKScene {
 
 	private func steBackgroundImage() {
 		let spaceBackground = SKSpriteNode(imageNamed:"lost")
-		let screenSize: CGRect = UIScreen.mainScreen().bounds;
 
 		spaceBackground.zPosition = -1000
-		spaceBackground.size = CGSizeMake(screenSize.width, screenSize.height)
+		spaceBackground.size = CGSizeMake(CGRectGetMaxX(self.frame), CGRectGetMaxY(self.frame))
 		spaceBackground.position = CGPoint(x: CGRectGetMidX(self.frame), y: CGRectGetMidY(self.frame))
 
 		backgroundColor = SKColor.blackColor()
@@ -36,6 +35,11 @@ class GameLostScene: SKScene {
 
 	override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
 		if let scene = GameScene(fileNamed:"GameScene") {
+			scene.size = self.size
+			scene.scaleMode = .AspectFill
+			self.removeAllActions()
+			self.removeAllChildren()
+
 			let transition = SKTransition.fadeWithDuration(1)
 			self.view?.presentScene(scene, transition: transition)
 		}

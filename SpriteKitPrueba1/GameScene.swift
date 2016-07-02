@@ -30,14 +30,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	private let showUfoSpeed = 3
 	private let ufoAngularSpeed = 2
 	private let ufoSpeed = 5
-	private let userShipScale:CGFloat = CGFloat(1.0)
-	private let ufoShipScale:CGFloat = CGFloat(1.0)
+	private let ufoShipScale:CGFloat = CGFloat(0.8)
 	private var ufoExplosionImages: [SKTexture] = []
 	private var ufoSemaphore = dispatch_semaphore_create(0)
 
 	private let showEnemySpeed = 3
 	private let enemySpeed = 5
-	private let enemyShipScale:CGFloat = CGFloat(1.0)
+	private let enemyShipScale:CGFloat = CGFloat(0.8)
 	private var enemyExplosionImages: [SKTexture] = []
 	private var enemySemaphore = dispatch_semaphore_create(0)
 	private let enemyShipRunActionKey: String = "enemyShip.runAction-Key"
@@ -49,6 +48,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	private let userLifesMaxCount = 3
 	private var userLifesCounter = 3
 	private var userLifeShips:[SKSpriteNode] = []
+	private let userShipScale:CGFloat = CGFloat(0.8)
 	private let separator = 50
 	private let menuBackName = "MenuBack"
 	private let hitsLabelText:String = "Hits:"
@@ -62,7 +62,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	override func didMoveToView(view: SKView) {
 		self.physicsWorld.gravity = CGVectorMake(0, 0)
 		self.physicsWorld.contactDelegate = self
-		self.yUserShipPosition = CGRectGetMidY(self.frame) / 4
+		self.yUserShipPosition = CGRectGetMidY(self.frame) / 3 + 25
 		self.setBackgroundImage()
 
 		self.addPointsCounter()
@@ -83,7 +83,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		pointsCounter.text = "\(hitsLabelText) \(pointsText)"
 		pointsCounter.fontSize = 36
 		pointsCounter.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Bottom
-		pointsCounter.position = CGPoint(x: Int(CGRectGetMaxX(self.frame)) - (separator * 3), y: Int(CGRectGetMaxY(self.frame)) - separator - 5)
+		pointsCounter.position = CGPoint(x: Int(CGRectGetMaxX(self.frame)) - (separator * 3), y: Int(Double(CGRectGetMaxY(self.frame)) - Double(separator) * 2.8))
 
 		self.addChild(pointsCounter)
 		//myLabel.runAction(SKAction.sequence([SKAction.waitForDuration(3.0), SKAction.fadeOutWithDuration(1), SKAction.removeFromParent()]))
@@ -93,11 +93,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		let menuBack = SKLabelNode()
 
 		menuBack.fontName = "Apple Color Emoji"
-		menuBack.text = "Menu"
+		menuBack.text = "Menu"// \(self.size.width)x\(self.size.height)"
 		menuBack.name = menuBackName
 		menuBack.fontSize = 36
 		menuBack.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Bottom
-		menuBack.position = CGPoint(x: Int(CGRectGetMidX(self.frame)) - (separator / 2), y: Int(CGRectGetMaxY(self.frame)) - separator - 5)
+		menuBack.position = CGPoint(x: Int(CGRectGetMidX(self.frame)) - (separator / 2), y: Int(Double(CGRectGetMaxY(self.frame)) - Double(separator) * 2.8))
 
 		self.addChild(menuBack)
 	}
@@ -109,7 +109,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 
 	private func addUserLifeImage(userLifeItem: Int){
-		let location = CGPoint(x: separator * userLifeItem, y: Int(CGRectGetMaxY(self.frame)) - separator)
+		let location = CGPoint(x: separator * userLifeItem, y: Int(Double(CGRectGetMaxY(self.frame)) - Double(separator) * 2.5))
 		let userLifeShip = SKSpriteNode(imageNamed:"UserShip")
 
 		userLifeShip.xScale = userShipScale / 2
@@ -191,7 +191,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 	private func didMenu() {
 		if let scene = GameStartScene(fileNamed:"GameStartScene") {
+			scene.size = self.size
+			scene.scaleMode = .AspectFill
+
+			self.removeAllActions()
+			self.removeAllChildren()
 			let transition = SKTransition.fadeWithDuration(2)
+
 			self.view?.presentScene(scene, transition: transition)
 		}
 	}
@@ -301,6 +307,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 	private func didLose() {
 		if let scene = GameLostScene(fileNamed:"GameLostScene") {
+			scene.size = self.size
+			scene.scaleMode = .AspectFill
+			self.removeAllActions()
+			self.removeAllChildren()
+
 			let transition = SKTransition.fadeWithDuration(2)
 			self.view?.presentScene(scene, transition: transition)
 		}
@@ -369,6 +380,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	private func didWon() {
 		if(hitsLabelPoints >= 100) {
 			if let scene = GameWonScene(fileNamed:"GameWonScene") {
+				scene.size = self.size
+				scene.scaleMode = .AspectFill
+				self.removeAllActions()
+				self.removeAllChildren()
+
 				let transition = SKTransition.fadeWithDuration(2)
 				self.view?.presentScene(scene, transition: transition)
 			}
