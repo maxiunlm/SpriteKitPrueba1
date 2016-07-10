@@ -19,6 +19,10 @@
 		AD9438E31CE3F69000196F7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD9438E11CE3F69000196F7D /* LaunchScreen.storyboard */; };
 		AD9438EE1CE3F69000196F7D /* SpriteKitPrueba1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9438ED1CE3F69000196F7D /* SpriteKitPrueba1Tests.swift */; };
 		AD9438F91CE3F69100196F7D /* SpriteKitPrueba1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9438F81CE3F69100196F7D /* SpriteKitPrueba1UITests.swift */; };
+		AD98D8F01D32DBF000B11BA8 /* UserSpaceShipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD98D8EF1D32DBF000B11BA8 /* UserSpaceShipTests.swift */; };
+		AD98D8F21D32DC2700B11BA8 /* UserSpaceShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD98D8F11D32DC2700B11BA8 /* UserSpaceShip.swift */; };
+		AD98D8F51D32DEE400B11BA8 /* PhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD98D8F41D32DEE400B11BA8 /* PhysicsCategory.swift */; };
+		ADA0D51A1D307D2E0052E49D /* ScoreBusiness.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA0D5191D307D2E0052E49D /* ScoreBusiness.swift */; };
 		ADB67ADF1D0F7CE000E9DEB0 /* GameLostScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADB67ADE1D0F7CE000E9DEB0 /* GameLostScene.sks */; };
 		ADB67AE11D0F7DCB00E9DEB0 /* GameLostScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB67AE01D0F7DCB00E9DEB0 /* GameLostScene.swift */; };
 		ADB67AE31D0F7F4400E9DEB0 /* GameWonScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB67AE21D0F7F4400E9DEB0 /* GameWonScene.swift */; };
@@ -65,6 +69,10 @@
 		AD9438F41CE3F69100196F7D /* SpriteKitPrueba1UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpriteKitPrueba1UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD9438F81CE3F69100196F7D /* SpriteKitPrueba1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitPrueba1UITests.swift; sourceTree = "<group>"; };
 		AD9438FA1CE3F69100196F7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD98D8EF1D32DBF000B11BA8 /* UserSpaceShipTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSpaceShipTests.swift; sourceTree = "<group>"; };
+		AD98D8F11D32DC2700B11BA8 /* UserSpaceShip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSpaceShip.swift; sourceTree = "<group>"; };
+		AD98D8F41D32DEE400B11BA8 /* PhysicsCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhysicsCategory.swift; sourceTree = "<group>"; };
+		ADA0D5191D307D2E0052E49D /* ScoreBusiness.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreBusiness.swift; sourceTree = "<group>"; };
 		ADB67ADE1D0F7CE000E9DEB0 /* GameLostScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameLostScene.sks; sourceTree = "<group>"; };
 		ADB67AE01D0F7DCB00E9DEB0 /* GameLostScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLostScene.swift; sourceTree = "<group>"; };
 		ADB67AE21D0F7F4400E9DEB0 /* GameWonScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWonScene.swift; sourceTree = "<group>"; };
@@ -133,6 +141,8 @@
 		AD9438D31CE3F69000196F7D /* SpriteKitPrueba1 */ = {
 			isa = PBXGroup;
 			children = (
+				AD98D8F31D32DECE00B11BA8 /* Models */,
+				ADA0D5181D307CFE0052E49D /* Business */,
 				AD29AE481CF238DD0051B3DC /* Sounds */,
 				AD9438D41CE3F69000196F7D /* AppDelegate.swift */,
 				AD9438D61CE3F69000196F7D /* GameScene.sks */,
@@ -159,6 +169,7 @@
 			children = (
 				AD9438ED1CE3F69000196F7D /* SpriteKitPrueba1Tests.swift */,
 				AD9438EF1CE3F69000196F7D /* Info.plist */,
+				AD98D8EF1D32DBF000B11BA8 /* UserSpaceShipTests.swift */,
 			);
 			path = SpriteKitPrueba1Tests;
 			sourceTree = "<group>";
@@ -170,6 +181,23 @@
 				AD9438FA1CE3F69100196F7D /* Info.plist */,
 			);
 			path = SpriteKitPrueba1UITests;
+			sourceTree = "<group>";
+		};
+		AD98D8F31D32DECE00B11BA8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AD98D8F41D32DEE400B11BA8 /* PhysicsCategory.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		ADA0D5181D307CFE0052E49D /* Business */ = {
+			isa = PBXGroup;
+			children = (
+				ADA0D5191D307D2E0052E49D /* ScoreBusiness.swift */,
+				AD98D8F11D32DC2700B11BA8 /* UserSpaceShip.swift */,
+			);
+			name = Business;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,7 +344,10 @@
 				ADCF42691CFB99C30088D102 /* GameStartScene.swift in Sources */,
 				AD9438DB1CE3F69000196F7D /* GameViewController.swift in Sources */,
 				ADB67AE31D0F7F4400E9DEB0 /* GameWonScene.swift in Sources */,
+				AD98D8F21D32DC2700B11BA8 /* UserSpaceShip.swift in Sources */,
+				ADA0D51A1D307D2E0052E49D /* ScoreBusiness.swift in Sources */,
 				AD9438D51CE3F69000196F7D /* AppDelegate.swift in Sources */,
+				AD98D8F51D32DEE400B11BA8 /* PhysicsCategory.swift in Sources */,
 				ADB67AE11D0F7DCB00E9DEB0 /* GameLostScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD98D8F01D32DBF000B11BA8 /* UserSpaceShipTests.swift in Sources */,
 				AD9438EE1CE3F69000196F7D /* SpriteKitPrueba1Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
