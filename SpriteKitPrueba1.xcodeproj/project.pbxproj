@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AD09C9271CE6920D0093AB6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD09C9261CE6920D0093AB6B /* Assets.xcassets */; };
+		AD2927471D44428700B16BAA /* UserSpaceShipShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2927461D44428700B16BAA /* UserSpaceShipShot.swift */; };
 		AD29AE4C1CF23B280051B3DC /* engine.wav in Resources */ = {isa = PBXBuildFile; fileRef = AD29AE491CF23B280051B3DC /* engine.wav */; };
 		AD29AE4E1CF23B280051B3DC /* shot.wav in Resources */ = {isa = PBXBuildFile; fileRef = AD29AE4B1CF23B280051B3DC /* shot.wav */; };
 		AD29AE501CF23E480051B3DC /* explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = AD29AE4F1CF23E480051B3DC /* explosion.wav */; };
@@ -29,6 +30,11 @@
 		ADB67AE51D0F7F5C00E9DEB0 /* GameWonScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADB67AE41D0F7F5C00E9DEB0 /* GameWonScene.sks */; };
 		ADCF42691CFB99C30088D102 /* GameStartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCF42681CFB99C30088D102 /* GameStartScene.swift */; };
 		ADCF426B1CFBA1370088D102 /* GameStartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADCF426A1CFBA1370088D102 /* GameStartScene.sks */; };
+		ADFA66BD1D42C07200885A45 /* UfoSpaceShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA66BC1D42C07200885A45 /* UfoSpaceShip.swift */; };
+		ADFA66BF1D42C32F00885A45 /* EnemySpaceShipBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA66BE1D42C32F00885A45 /* EnemySpaceShipBase.swift */; };
+		ADFA66C11D42C46900885A45 /* SpaceShipBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA66C01D42C46900885A45 /* SpaceShipBase.swift */; };
+		ADFA66C31D42C9BE00885A45 /* EnemySpaceShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA66C21D42C9BE00885A45 /* EnemySpaceShip.swift */; };
+		ADFA66C51D42CD0600885A45 /* MathHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA66C41D42CD0600885A45 /* MathHelper.swift */; };
 		ADFE1F371CED419300786423 /* ShipExplotionParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADFE1F351CED419300786423 /* ShipExplotionParticle.sks */; };
 		ADFE1F381CED419300786423 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = ADFE1F361CED419300786423 /* spark.png */; };
 /* End PBXBuildFile section */
@@ -52,6 +58,7 @@
 
 /* Begin PBXFileReference section */
 		AD09C9261CE6920D0093AB6B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AD2927461D44428700B16BAA /* UserSpaceShipShot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSpaceShipShot.swift; sourceTree = "<group>"; };
 		AD29AE491CF23B280051B3DC /* engine.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = engine.wav; path = Sounds/engine.wav; sourceTree = "<group>"; };
 		AD29AE4B1CF23B280051B3DC /* shot.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = shot.wav; path = Sounds/shot.wav; sourceTree = "<group>"; };
 		AD29AE4F1CF23E480051B3DC /* explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = explosion.wav; path = Sounds/explosion.wav; sourceTree = "<group>"; };
@@ -79,6 +86,11 @@
 		ADB67AE41D0F7F5C00E9DEB0 /* GameWonScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameWonScene.sks; sourceTree = "<group>"; };
 		ADCF42681CFB99C30088D102 /* GameStartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStartScene.swift; sourceTree = "<group>"; };
 		ADCF426A1CFBA1370088D102 /* GameStartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameStartScene.sks; sourceTree = "<group>"; };
+		ADFA66BC1D42C07200885A45 /* UfoSpaceShip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UfoSpaceShip.swift; sourceTree = "<group>"; };
+		ADFA66BE1D42C32F00885A45 /* EnemySpaceShipBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemySpaceShipBase.swift; sourceTree = "<group>"; };
+		ADFA66C01D42C46900885A45 /* SpaceShipBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceShipBase.swift; sourceTree = "<group>"; };
+		ADFA66C21D42C9BE00885A45 /* EnemySpaceShip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemySpaceShip.swift; sourceTree = "<group>"; };
+		ADFA66C41D42CD0600885A45 /* MathHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathHelper.swift; sourceTree = "<group>"; };
 		ADFE1F351CED419300786423 /* ShipExplotionParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = ShipExplotionParticle.sks; path = Assets.xcassets/ShipExplotionParticle.sks; sourceTree = "<group>"; };
 		ADFE1F361CED419300786423 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = Assets.xcassets/spark.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +120,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AD047E751D42DC3800D7236C /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				ADFE1F361CED419300786423 /* spark.png */,
+				ADFE1F351CED419300786423 /* ShipExplotionParticle.sks */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
 		AD29AE481CF238DD0051B3DC /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +162,8 @@
 		AD9438D31CE3F69000196F7D /* SpriteKitPrueba1 */ = {
 			isa = PBXGroup;
 			children = (
+				AD047E751D42DC3800D7236C /* Assets */,
+				ADFA66C61D42CDAE00885A45 /* Helpers */,
 				AD98D8F31D32DECE00B11BA8 /* Models */,
 				ADA0D5181D307CFE0052E49D /* Business */,
 				AD29AE481CF238DD0051B3DC /* Sounds */,
@@ -152,8 +175,6 @@
 				AD09C9261CE6920D0093AB6B /* Assets.xcassets */,
 				AD9438E11CE3F69000196F7D /* LaunchScreen.storyboard */,
 				AD9438E41CE3F69000196F7D /* Info.plist */,
-				ADFE1F351CED419300786423 /* ShipExplotionParticle.sks */,
-				ADFE1F361CED419300786423 /* spark.png */,
 				ADCF42681CFB99C30088D102 /* GameStartScene.swift */,
 				ADCF426A1CFBA1370088D102 /* GameStartScene.sks */,
 				ADB67ADE1D0F7CE000E9DEB0 /* GameLostScene.sks */,
@@ -196,8 +217,21 @@
 			children = (
 				ADA0D5191D307D2E0052E49D /* ScoreBusiness.swift */,
 				AD98D8F11D32DC2700B11BA8 /* UserSpaceShip.swift */,
+				ADFA66BC1D42C07200885A45 /* UfoSpaceShip.swift */,
+				ADFA66BE1D42C32F00885A45 /* EnemySpaceShipBase.swift */,
+				ADFA66C01D42C46900885A45 /* SpaceShipBase.swift */,
+				ADFA66C21D42C9BE00885A45 /* EnemySpaceShip.swift */,
+				AD2927461D44428700B16BAA /* UserSpaceShipShot.swift */,
 			);
 			name = Business;
+			sourceTree = "<group>";
+		};
+		ADFA66C61D42CDAE00885A45 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				ADFA66C41D42CD0600885A45 /* MathHelper.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,13 +376,19 @@
 			files = (
 				AD9438D91CE3F69000196F7D /* GameScene.swift in Sources */,
 				ADCF42691CFB99C30088D102 /* GameStartScene.swift in Sources */,
+				ADFA66C31D42C9BE00885A45 /* EnemySpaceShip.swift in Sources */,
 				AD9438DB1CE3F69000196F7D /* GameViewController.swift in Sources */,
+				ADFA66BD1D42C07200885A45 /* UfoSpaceShip.swift in Sources */,
+				ADFA66C51D42CD0600885A45 /* MathHelper.swift in Sources */,
 				ADB67AE31D0F7F4400E9DEB0 /* GameWonScene.swift in Sources */,
+				ADFA66BF1D42C32F00885A45 /* EnemySpaceShipBase.swift in Sources */,
 				AD98D8F21D32DC2700B11BA8 /* UserSpaceShip.swift in Sources */,
 				ADA0D51A1D307D2E0052E49D /* ScoreBusiness.swift in Sources */,
 				AD9438D51CE3F69000196F7D /* AppDelegate.swift in Sources */,
+				ADFA66C11D42C46900885A45 /* SpaceShipBase.swift in Sources */,
 				AD98D8F51D32DEE400B11BA8 /* PhysicsCategory.swift in Sources */,
 				ADB67AE11D0F7DCB00E9DEB0 /* GameLostScene.swift in Sources */,
+				AD2927471D44428700B16BAA /* UserSpaceShipShot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

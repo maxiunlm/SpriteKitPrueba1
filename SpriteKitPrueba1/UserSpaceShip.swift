@@ -6,91 +6,105 @@
 //  Copyright © 2016 Maximiliano. All rights reserved.
 //
 
-import SpriteKit
 import Foundation
+import SpriteKit
 
-public class UserSpaceShip {
-	internal var userSpaceShip: SKSpriteNode = SKSpriteNode(imageNamed:"UserShip")
+
+public class UserSpaceShip: SpaceShipBase {
+	private var userSpaceShipShot: UserSpaceShipShot?
+	private var _yUserShipPosition : CGFloat?
+	public let spaceShipQuiet: SKTexture = SKTexture(imageNamed:"UserShip")
+	public let spaceShipToLeft: SKTexture = SKTexture(imageNamed:"UserShipToLeft")
+	public let spaceShipToRight: SKTexture = SKTexture(imageNamed:"UserShipToRight")
 	
-	private var _yUserShipPosition : CGFloat
-	private var userSpaceShipExplosionImages: [SKTexture] = []
-	internal var frame: CGRect
-	
-	
-	public let userSpaceShipQuiet: SKTexture = SKTexture(imageNamed:"UserShip")
-	public let userSpaceShipToLeft: SKTexture = SKTexture(imageNamed:"UserShipToLeft")
-	public let userSpaceShipToRight: SKTexture = SKTexture(imageNamed:"UserShipToRight")
-	public let userShipScale: CGFloat = CGFloat(0.8)
-	public let userSpaceShipExplosionTime: NSTimeInterval = NSTimeInterval(1)
 	public var position: CGPoint {
 		get {
-			return self.userSpaceShip.position
+			return self.spaceShip.position
 		}
 		set{
-			self.userSpaceShip.position = newValue
+			self.spaceShip.position = newValue
 		}
 	}
 	public var texture: SKTexture {
 		get {
-			return self.userSpaceShip.texture!
+			return self.spaceShip.texture!
 		}
 		set{
-			self.userSpaceShip.texture = newValue
+			self.spaceShip.texture = newValue
 		}
 	}
+	
 	public var yUserShipPosition : CGFloat {
 		get {
-			return self._yUserShipPosition
+			return self._yUserShipPosition!
 		}
 	}
 	public var size : CGSize {
 		get {
-			return self.userSpaceShip.size
+			return self.spaceShip.size
+		}
+	}
+	public var isShotEnabled: Bool {
+		get {
+			return self.userSpaceShipShot!.isShotEnabled
 		}
 	}
 	
 	
-	public init(frame: CGRect) {
-		self.frame = frame
-		self._yUserShipPosition = CGRectGetMidY(self.frame) / 3 + 25
+	public override init(gameScene: SKScene) {
+		super.init(gameScene: gameScene)
 		
-		self.loadExplosions()
+		self.spaceShip = SKSpriteNode(imageNamed:"UserShip")
+		self._yUserShipPosition = CGRectGetMidY(self.gameScene.frame) / 3 + 25
+		self.userSpaceShipShot = UserSpaceShipShot(gameScene: self.gameScene, userSpaceShip: self.spaceShip)
 	}
 	
-	
-	
-	public func createUserSpaceShip() -> SKSpriteNode {
-		let location = CGPoint(x: CGRectGetMidX(self.frame), y: self.yUserShipPosition)
+	public func doShipExplotion() {
+		self.userSpaceShipShot!.isShotEnabled = false
+		let path = NSBundle.mainBundle().pathForResource("ShipExplotionParticle", ofType: "sks")
+		let shipExplotionParticle = NSKeyedUnarchiver.unarchiveObjectWithFile(path!) as! SKEmitterNode
 		
-		self.userSpaceShip.xScale = userShipScale
-		self.userSpaceShip.yScale = userShipScale
+		shipExplotionParticle.position = spaceShip.position
+		shipExplotionParticle.name = "shipExplotionParticle"
+		shipExplotionParticle.targetNode = self.gameScene.scene
+		shipExplotionParticle.zPosition = 1000
+		
+		let hiddenShipAction:SKAction = SKAction.customActionWithDuration(NSTimeInterval(self.spaceShipExplosionTime), actionBlock: { (node: SKNode!, elapsedTime: CGFloat) -> Void in
+			self.spaceShip.position = CGPoint(x: -CGRectGetMaxX(self.gameScene.frame), y: -CGRectGetMaxY(self.gameScene.frame))
+		})
+		let showShipAction:SKAction = SKAction.customActionWithDuration(NSTimeInterval(self.spaceShipExplosionTime), actionBlock: { (node: SKNode!, elapsedTime: CGFloat) -> Void in
+			if(elapsedTime >= CGFloat(self.spaceShipExplosionTime) && elapsedTime > CGFloat(self.userSpaceShipShot!.shottingSpeed) * 2) {
+				self.spaceShip.position = CGPoint(x: CGRectGetMidX(self.gameScene.frame), y: self.yUserShipPosition)
+				self.userSpaceShipShot!.isShotEnabled = true
+				self.userSpaceShipShot!.addShot();
+			}
+		})
+		self.gameScene.addChild(shipExplotionParticle)
+		
+		shipExplotionParticle.runAction(SKAction.sequence([hiddenShipAction, SKAction.waitForDuration(1), showShipAction, SKAction.removeFromParent()]))
+	}
+	
+	public func createSpaceShip() -> SKSpriteNode {
+		let location = CGPoint(x: CGRectGetMidX(self.gameScene.frame), y: self.yUserShipPosition)
+		
+		self.spaceShip.xScale = self.spaceShipScale
+		self.spaceShip.yScale = self.spaceShipScale
 		self.position = location
-		self.userSpaceShip.zPosition = 500
+		self.spaceShip.zPosition = 500
 		
-		self.userSpaceShip.physicsBody = SKPhysicsBody(circleOfRadius: userSpaceShip.size.width / 2)
-		self.userSpaceShip.physicsBody?.dynamic = true
-		self.userSpaceShip.physicsBody?.categoryBitMask = PhysicsCategory.UserShip.rawValue
-		self.userSpaceShip.physicsBody?.contactTestBitMask = PhysicsCategory.Enemy.rawValue + PhysicsCategory.UFO.rawValue
-		self.userSpaceShip.physicsBody?.collisionBitMask = PhysicsCategory.None.rawValue
-		self.userSpaceShip.physicsBody?.usesPreciseCollisionDetection = true
+		self.spaceShip.physicsBody = SKPhysicsBody(circleOfRadius: spaceShip.size.width / 2)
+		self.spaceShip.physicsBody?.dynamic = true
+		self.spaceShip.physicsBody?.categoryBitMask = PhysicsCategory.UserShip.rawValue
+		self.spaceShip.physicsBody?.contactTestBitMask = PhysicsCategory.Enemy.rawValue + PhysicsCategory.UFO.rawValue
+		self.spaceShip.physicsBody?.collisionBitMask = PhysicsCategory.None.rawValue
+		self.spaceShip.physicsBody?.usesPreciseCollisionDetection = true
 		
-		//self.addChild(userSpaceShip)
+		//self.addChild(spaceShip)
 		
-		return userSpaceShip
+		return spaceShip
 	}
 	
-	
-	private func loadExplosions() {
-		for imageFrame in 0...281 {
-			let indexImage:String = String(format: "%03d", imageFrame)
-			let imagePath: String = "shipexplosion0\( indexImage )"
-			let image: SKTexture = SKTexture(imageNamed: imagePath)
-			
-			self.userSpaceShipExplosionImages.append(image)
-		}
-	}
-	
-	public func runAction(action: SKAction, completion block: () -> Void){
-		self.userSpaceShip.runAction(action, completion: block)
+	public func disposeShot(shot: SKSpriteNode) {
+		self.userSpaceShipShot!.disposeShot(shot)
 	}
 }
