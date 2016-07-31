@@ -12,13 +12,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	private var userSpaceShip: UserSpaceShip?
 	private var ufoSpaceShip: UfoSpaceShip?
 	private var enemySpaceShip: EnemySpaceShip?
-	
+	private var userLife: UserLife?
 	
 	
 	private var pointsCounter:SKLabelNode = SKLabelNode()//fontNamed:"Chalkduster")
-	private let userLifesMaxCount = 3
-	private var userLifesCounter = 3
-	private var userLifeShips:[SKSpriteNode] = []
 	private let separator = 50
 	private let menuBackName = "MenuBack"
 	private let hitsLabelText:String = "Hits:"
@@ -34,8 +31,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		self.userSpaceShip = UserSpaceShip(gameScene: self)
 		self.addChild(self.userSpaceShip!.createSpaceShip())
-		self.addUserLifes()
-		
+		self.userLife = UserLife(gameScene: self, userSpaceShip: self.userSpaceShip!)
+		self.userLife!.addUserLifes()
+
 		self.ufoSpaceShip = UfoSpaceShip(gameScene: self)
 		self.enemySpaceShip = EnemySpaceShip(gameScene: self)
 		self.loaBackgroundSounds()
@@ -65,25 +63,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		menuBack.position = CGPoint(x: Int(CGRectGetMidX(self.frame)) - (separator / 2), y: Int(Double(CGRectGetMaxY(self.frame)) - Double(separator) * 2.8))
 		
 		self.addChild(menuBack)
-	}
-	
-	private func addUserLifes(){
-		for userLifeItem in 1...userLifesMaxCount {
-			addUserLifeImage(userLifeItem)
-		}
-	}
-	
-	private func addUserLifeImage(userLifeItem: Int){
-		let location = CGPoint(x: separator * userLifeItem, y: Int(Double(CGRectGetMaxY(self.frame)) - Double(separator) * 2.5))
-		let userLifeShip = SKSpriteNode(imageNamed:"UserShip")
-		
-		userLifeShip.xScale = self.userSpaceShip!.spaceShipScale / 2
-		userLifeShip.yScale = self.userSpaceShip!.spaceShipScale / 2
-		userLifeShip.position = location
-		userLifeShip.zPosition = 1000
-		
-		userLifeShips.append(userLifeShip)
-		self.addChild(userLifeShip)
 	}
 	
 	private func loaBackgroundSounds() {
@@ -164,13 +143,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 					(secondBody!.categoryBitMask & PhysicsCategory.UFO.rawValue != 0)) {
 					self.userSpaceShip!.doShipExplotion()
 					self.ufoSpaceShip!.ufoDidCollideWithShip(enemyObject)
-					self.removeUserLife()
+
+					if(self.userLife!.removeUserLife() <= 0) {
+						self.didLose()
+					}
 				}
 				else if ((firstBody!.categoryBitMask & PhysicsCategory.UserShip.rawValue != 0) &&
 					(secondBody!.categoryBitMask & PhysicsCategory.Enemy.rawValue != 0)) {
 					self.userSpaceShip!.doShipExplotion()
 					self.enemySpaceShip!.enemyDidCollideWithShip(enemyObject)
-					self.removeUserLife()
+
+					if(self.userLife!.removeUserLife() <= 0) {
+						self.didLose()
+					}
 				}
 				else
 					if(self.userSpaceShip!.isShotEnabled) {
@@ -200,15 +185,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		//		}
 	}
 	
-	private func removeUserLife() {
-		userLifesCounter -= 1
-		
-		if(userLifesCounter >= 0) {
-			userLifeShips[userLifesCounter].runAction(SKAction.fadeOutWithDuration(1))
-		}
-		else {
-			didLose()
-		}
+	private func enemyHitted() {
+		self.addPointsToHits(1)
+		self.didWon()
+	}
+	
+	private func ufoHitted() {
+		self.addPointsToHits(3)
+		self.didWon()
 	}
 	
 	private func didLose() {
@@ -242,15 +226,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 				self.view?.presentScene(scene, transition: transition)
 			}
 		}
-	}
-	
-	private func enemyHitted() {
-		self.addPointsToHits(1)
-		self.didWon()
-	}
-	
-	private func ufoHitted() {
-		self.addPointsToHits(3)
-		self.didWon()
 	}
 }

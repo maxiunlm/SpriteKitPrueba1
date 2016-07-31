@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AD09C9271CE6920D0093AB6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD09C9261CE6920D0093AB6B /* Assets.xcassets */; };
+		AD23238B1D4D810600A7B03A /* UserLife.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD23238A1D4D810600A7B03A /* UserLife.swift */; };
 		AD2927471D44428700B16BAA /* UserSpaceShipShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2927461D44428700B16BAA /* UserSpaceShipShot.swift */; };
 		AD29AE4C1CF23B280051B3DC /* engine.wav in Resources */ = {isa = PBXBuildFile; fileRef = AD29AE491CF23B280051B3DC /* engine.wav */; };
 		AD29AE4E1CF23B280051B3DC /* shot.wav in Resources */ = {isa = PBXBuildFile; fileRef = AD29AE4B1CF23B280051B3DC /* shot.wav */; };
@@ -58,6 +59,7 @@
 
 /* Begin PBXFileReference section */
 		AD09C9261CE6920D0093AB6B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AD23238A1D4D810600A7B03A /* UserLife.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLife.swift; sourceTree = "<group>"; };
 		AD2927461D44428700B16BAA /* UserSpaceShipShot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSpaceShipShot.swift; sourceTree = "<group>"; };
 		AD29AE491CF23B280051B3DC /* engine.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = engine.wav; path = Sounds/engine.wav; sourceTree = "<group>"; };
 		AD29AE4B1CF23B280051B3DC /* shot.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = shot.wav; path = Sounds/shot.wav; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				ADFA66C01D42C46900885A45 /* SpaceShipBase.swift */,
 				ADFA66C21D42C9BE00885A45 /* EnemySpaceShip.swift */,
 				AD2927461D44428700B16BAA /* UserSpaceShipShot.swift */,
+				AD23238A1D4D810600A7B03A /* UserLife.swift */,
 			);
 			name = Business;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				ADFA66C51D42CD0600885A45 /* MathHelper.swift in Sources */,
 				ADB67AE31D0F7F4400E9DEB0 /* GameWonScene.swift in Sources */,
 				ADFA66BF1D42C32F00885A45 /* EnemySpaceShipBase.swift in Sources */,
+				AD23238B1D4D810600A7B03A /* UserLife.swift in Sources */,
 				AD98D8F21D32DC2700B11BA8 /* UserSpaceShip.swift in Sources */,
 				ADA0D51A1D307D2E0052E49D /* ScoreBusiness.swift in Sources */,
 				AD9438D51CE3F69000196F7D /* AppDelegate.swift in Sources */,
