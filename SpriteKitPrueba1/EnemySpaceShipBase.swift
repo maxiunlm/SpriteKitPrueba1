@@ -16,7 +16,7 @@ public class EnemySpaceShipBase: SpaceShipBase{
 		//for imageFrame in 0...maxExplotionImageIndex {
 		while (imageFrameIndex < maxExplotionImageIndex) {
 			let indexImage:String = String(format: "%03d", imageFrameIndex)
-			let imagePath: String = "\(explotionFileName)0\( indexImage )"
+			let imagePath: String = "\(self.explotionFileName!)0\( indexImage )"
 			let image: SKTexture = SKTexture(imageNamed: imagePath)
 			
 			self.spaceShipExplosionImages.append(image)

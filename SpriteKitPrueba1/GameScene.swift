@@ -31,10 +31,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		self.addPointsCounter()
 		self.addMenuBack()
-		self.addUserLifes()
 		
 		self.userSpaceShip = UserSpaceShip(gameScene: self)
 		self.addChild(self.userSpaceShip!.createSpaceShip())
+		self.addUserLifes()
 		
 		self.ufoSpaceShip = UfoSpaceShip(gameScene: self)
 		self.enemySpaceShip = EnemySpaceShip(gameScene: self)

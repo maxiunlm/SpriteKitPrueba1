@@ -36,10 +36,21 @@
          contextName = "GLOBAL">
          <PersistentStrings>
             <PersistentString
-               value = "hitsLabelText">
+               value = "UIFont.familyNames()">
             </PersistentString>
             <PersistentString
-               value = "UIFont.familyNames()">
+               value = "hitsLabelText">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "EnemySpaceShipBase.loadExplosions() -&gt; ():EnemySpaceShipBase.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "explotionFileName">
+            </PersistentString>
+            <PersistentString
+               value = "imagePath">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
