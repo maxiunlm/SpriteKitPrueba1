@@ -44,12 +44,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		pointsCounter.fontName = "Apple Color Emoji"
 		pointsCounter.text = "\(hitsLabelText) \(pointsText)"
-		pointsCounter.fontSize = 36
+		pointsCounter.fontSize = 22
 		pointsCounter.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Bottom
-		pointsCounter.position = CGPoint(x: Int(CGRectGetMaxX(self.frame)) - (separator * 3), y: Int(Double(CGRectGetMaxY(self.frame)) - Double(separator) * 2.8))
+		pointsCounter.position = CGPoint(x: Int(self.frame.width) - (separator * 2), y: Int(self.frame.height) - (separator / 2))
 		
 		self.addChild(pointsCounter)
-		//myLabel.runAction(SKAction.sequence([SKAction.waitForDuration(3.0), SKAction.fadeOutWithDuration(1), SKAction.removeFromParent()]))
 	}
 	
 	private func addMenuBack() {
@@ -58,9 +57,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		menuBack.fontName = "Apple Color Emoji"
 		menuBack.text = "Menu"// \(self.size.width)x\(self.size.height)"
 		menuBack.name = menuBackName
-		menuBack.fontSize = 36
+		menuBack.fontSize = 22
 		menuBack.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Bottom
-		menuBack.position = CGPoint(x: Int(CGRectGetMidX(self.frame)) - (separator / 2), y: Int(Double(CGRectGetMaxY(self.frame)) - Double(separator) * 2.8))
+		menuBack.position = CGPoint(x: Int(self.frame.midX) - (separator / 6), y: Int(self.frame.height) - (separator / 2))
 		
 		self.addChild(menuBack)
 	}

@@ -27,9 +27,9 @@ class GameStartScene: SKScene {
 
 
 		exitAction.name = exitName
-		exitAction.fontSize = 36
+		exitAction.fontSize = 22
 		exitAction.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Bottom
-		exitAction.position = CGPoint(x: Int(CGRectGetMidX(self.frame)) - (separator / 2), y: Int(CGRectGetMaxY(self.frame)) - separator - 100)
+		exitAction.position = CGPoint(x: Int(self.frame.midX) - (separator / 6), y: Int(self.frame.height) - (separator / 2))
 
 		self.addChild(exitAction)
 	}
@@ -40,8 +40,7 @@ class GameStartScene: SKScene {
 		//let screenSize: CGRect = UIScreen.mainScreen().bounds;
 
 		spaceBackground.zPosition = -1000
-		//spaceBackground.size = CGSizeMake(screenSize.width, screenSize.height)
-		spaceBackground.size = CGSizeMake(CGRectGetMaxX(self.frame), CGRectGetMaxY(self.frame))
+		spaceBackground.size = CGSizeMake(self.frame.width, self.frame.height)
 		spaceBackground.position = CGPoint(x: CGRectGetMidX(self.frame), y: CGRectGetMidY(self.frame))
 
 		backgroundColor = SKColor.blackColor()

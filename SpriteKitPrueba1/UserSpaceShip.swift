@@ -13,6 +13,7 @@ import SpriteKit
 public class UserSpaceShip: SpaceShipBase {
 	private var userSpaceShipShot: UserSpaceShipShot?
 	private var _yUserShipPosition : CGFloat?
+	private let separator = 50
 	public let spaceShipQuiet: SKTexture = SKTexture(imageNamed:"UserShip")
 	public let spaceShipToLeft: SKTexture = SKTexture(imageNamed:"UserShipToLeft")
 	public let spaceShipToRight: SKTexture = SKTexture(imageNamed:"UserShipToRight")
@@ -55,7 +56,7 @@ public class UserSpaceShip: SpaceShipBase {
 		super.init(gameScene: gameScene)
 		
 		self.spaceShip = SKSpriteNode(imageNamed:"UserShip")
-		self._yUserShipPosition = CGRectGetMidY(self.gameScene.frame) / 3 + 25
+		self._yUserShipPosition = self.gameScene.frame.minY + CGFloat(separator)
 		self.userSpaceShipShot = UserSpaceShipShot(gameScene: self.gameScene, userSpaceShip: self.spaceShip)
 		self.addShot()
 	}
@@ -65,6 +66,8 @@ public class UserSpaceShip: SpaceShipBase {
 		let path = NSBundle.mainBundle().pathForResource("ShipExplotionParticle", ofType: "sks")
 		let shipExplotionParticle = NSKeyedUnarchiver.unarchiveObjectWithFile(path!) as! SKEmitterNode
 		
+		shipExplotionParticle.xScale = self.spaceShipScale / 2
+		shipExplotionParticle.yScale = self.spaceShipScale / 2
 		shipExplotionParticle.position = spaceShip.position
 		shipExplotionParticle.name = "shipExplotionParticle"
 		shipExplotionParticle.targetNode = self.gameScene.scene

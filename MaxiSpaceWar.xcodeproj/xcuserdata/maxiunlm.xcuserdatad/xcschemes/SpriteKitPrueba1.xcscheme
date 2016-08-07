@@ -17,7 +17,7 @@
                BlueprintIdentifier = "AD9438D01CE3F69000196F7D"
                BuildableName = "SpriteKitPrueba1.app"
                BlueprintName = "SpriteKitPrueba1"
-               ReferencedContainer = "container:SpriteKitPrueba1.xcodeproj">
+               ReferencedContainer = "container:MaxiSpaceWar.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "AD9438E81CE3F69000196F7D"
                BuildableName = "SpriteKitPrueba1Tests.xctest"
                BlueprintName = "SpriteKitPrueba1Tests"
-               ReferencedContainer = "container:SpriteKitPrueba1.xcodeproj">
+               ReferencedContainer = "container:MaxiSpaceWar.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "AD9438F31CE3F69100196F7D"
                BuildableName = "SpriteKitPrueba1UITests.xctest"
                BlueprintName = "SpriteKitPrueba1UITests"
-               ReferencedContainer = "container:SpriteKitPrueba1.xcodeproj">
+               ReferencedContainer = "container:MaxiSpaceWar.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,7 +55,7 @@
             BlueprintIdentifier = "AD9438D01CE3F69000196F7D"
             BuildableName = "SpriteKitPrueba1.app"
             BlueprintName = "SpriteKitPrueba1"
-            ReferencedContainer = "container:SpriteKitPrueba1.xcodeproj">
+            ReferencedContainer = "container:MaxiSpaceWar.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -78,7 +78,7 @@
             BlueprintIdentifier = "AD9438D01CE3F69000196F7D"
             BuildableName = "SpriteKitPrueba1.app"
             BlueprintName = "SpriteKitPrueba1"
-            ReferencedContainer = "container:SpriteKitPrueba1.xcodeproj">
+            ReferencedContainer = "container:MaxiSpaceWar.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -97,7 +97,7 @@
             BlueprintIdentifier = "AD9438D01CE3F69000196F7D"
             BuildableName = "SpriteKitPrueba1.app"
             BlueprintName = "SpriteKitPrueba1"
-            ReferencedContainer = "container:SpriteKitPrueba1.xcodeproj">
+            ReferencedContainer = "container:MaxiSpaceWar.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -32,11 +32,11 @@ public class UserLife {
 	}
 	
 	public func addUserLifeImage(userLifeItem: Int){
-		let location = CGPoint(x: self.separator * userLifeItem, y: Int(Double(CGRectGetMaxY(self.gameScene.frame)) - Double(self.separator) * 2.5))
+		let location = CGPoint(x: self.separator * userLifeItem, y: Int(self.gameScene.frame.height) - (self.separator / 2))
 		let userLifeShip = SKSpriteNode(imageNamed:"UserShip")
 		
-		userLifeShip.xScale = self.userSpaceShip.spaceShipScale / 2
-		userLifeShip.yScale = self.userSpaceShip.spaceShipScale / 2
+		userLifeShip.xScale = self.userSpaceShip.spaceShipScale / 1.5
+		userLifeShip.yScale = self.userSpaceShip.spaceShipScale / 1.5
 		userLifeShip.position = location
 		userLifeShip.zPosition = 1000
 		

@@ -13,7 +13,6 @@ import SpriteKit
 public class EnemySpaceShip: EnemySpaceShipBase {
 	private let showEnemySpeed = 3
 	private let enemySpeed = 5
-	private let enemyShipScale:CGFloat = CGFloat(0.8)
 	//private var enemySemaphore = dispatch_semaphore_create(0)
 	private let enemyShipRunActionKey: String = "enemyShip.runAction-Key"
 	
@@ -32,8 +31,8 @@ public class EnemySpaceShip: EnemySpaceShipBase {
 		let enemyShip: SKSpriteNode = SKSpriteNode(imageNamed:"EnemyShip")
 		let toYDestination = CGRectGetMinY(self.gameScene.frame) - CGRectGetMidY(self.gameScene.frame) / 3;
 		
-		enemyShip.xScale = enemyShipScale
-		enemyShip.yScale = enemyShipScale
+		enemyShip.xScale = self.spaceShipScale
+		enemyShip.yScale = self.spaceShipScale
 		enemyShip.position = location
 		enemyShip.zPosition = 0
 		
@@ -72,8 +71,8 @@ public class EnemySpaceShip: EnemySpaceShipBase {
 		enemy.removeFromParent()
 		
 		let falseEnemyShip: SKSpriteNode = SKSpriteNode(imageNamed:"EnemyShip")
-		falseEnemyShip.xScale = enemyShipScale
-		falseEnemyShip.yScale = enemyShipScale
+		falseEnemyShip.xScale = self.spaceShipScale
+		falseEnemyShip.yScale = self.spaceShipScale
 		falseEnemyShip.position = position
 		falseEnemyShip.zPosition = 900
 		self.gameScene.addChild(falseEnemyShip)
