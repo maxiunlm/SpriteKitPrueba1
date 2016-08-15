@@ -10,12 +10,12 @@ import Foundation
 import SpriteKit
 
 
-public class UserSpaceShipShot {
-	private let shotScale:CGFloat = CGFloat(0.5)
+public class UserSpaceShipShoot {
+	private let shootScale:CGFloat = CGFloat(0.5)
 	private var gameScene: SKScene
 	private var userSpaceShip: SKSpriteNode
 	public let shottingSpeed = 0.3
-	public var isShotEnabled = true
+	public var isShootEnabled = true
 	
 	
 	public init(gameScene: SKScene, userSpaceShip: SKSpriteNode) {
@@ -23,40 +23,40 @@ public class UserSpaceShipShot {
 		self.userSpaceShip = userSpaceShip
 	}
 	
-	public func disposeShot(shot: SKSpriteNode) {
-		shot.hidden = true
-		shot.position.x = CGRectGetMidX(self.gameScene.frame) - CGRectGetMaxX(self.gameScene.frame)
+	public func disposeShot(shoot: SKSpriteNode) {
+		shoot.hidden = true
+		shoot.position.x = CGRectGetMidX(self.gameScene.frame) - CGRectGetMaxX(self.gameScene.frame)
 	}
 	
 	
-	public func addShot() {
+	public func addShoot() {
 		let location = CGPoint(x: userSpaceShip.position.x, y: self.userSpaceShip.position.y + (self.userSpaceShip.size.height / 2) )
-		let shot = SKSpriteNode(imageNamed: "Shot")
+		let shoot = SKSpriteNode(imageNamed: "Shoot")
 		
-		shot.xScale = shotScale
-		shot.yScale = shotScale
-		shot.position = location
-		shot.zPosition = -500
+		shoot.xScale = self.shootScale
+		shoot.yScale = self.shootScale
+		shoot.position = location
+		shoot.zPosition = -500
 		
-		shot.physicsBody = SKPhysicsBody(rectangleOfSize: shot.size)
-		shot.physicsBody?.dynamic = true
-		shot.physicsBody?.categoryBitMask = PhysicsCategory.Shot.rawValue
-		shot.physicsBody?.contactTestBitMask = PhysicsCategory.Enemy.rawValue
-		shot.physicsBody?.collisionBitMask = PhysicsCategory.None.rawValue
-		shot.physicsBody?.usesPreciseCollisionDetection = true
+		shoot.physicsBody = SKPhysicsBody(rectangleOfSize: shoot.size)
+		shoot.physicsBody?.dynamic = true
+		shoot.physicsBody?.categoryBitMask = PhysicsCategory.Shot.rawValue
+		shoot.physicsBody?.contactTestBitMask = PhysicsCategory.Enemy.rawValue
+		shoot.physicsBody?.collisionBitMask = PhysicsCategory.None.rawValue
+		shoot.physicsBody?.usesPreciseCollisionDetection = true
 		
 		let moveAction:SKAction = SKAction.moveToY(CGRectGetMaxY(self.gameScene.frame), duration: 1)
 		let anotherShotAction:SKAction = SKAction.customActionWithDuration(shottingSpeed, actionBlock: { (node: SKNode!, elapsedTime: CGFloat) -> Void in
 			if(elapsedTime >= CGFloat(self.shottingSpeed)) {
-				self.addShot()
+				self.addShoot()
 			}
 		})
 		
-		self.gameScene.addChild(shot)
+		self.gameScene.addChild(shoot)
 		
-		shot.runAction(SKAction.sequence([SKAction.playSoundFileNamed("shot.wav",waitForCompletion:false), moveAction, SKAction.removeFromParent()]))
+		shoot.runAction(SKAction.sequence([SKAction.playSoundFileNamed("shot.wav",waitForCompletion:false), moveAction, SKAction.removeFromParent()]))
 		
-		if(isShotEnabled) {
+		if(isShootEnabled) {
 			self.gameScene.runAction(SKAction.sequence([ SKAction.waitForDuration(shottingSpeed), anotherShotAction]))
 		}
 	}

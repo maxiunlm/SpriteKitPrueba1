@@ -11,13 +11,17 @@ import Foundation
 
 
 public class UfoSpaceShip: EnemySpaceShipBase {
+	private var ufoSpaceShipShoot: UfoSpaceShipShoot?
+	private var userSpaceShip: SKSpriteNode
 	private let showSpeed = 3
 	private let ufoAngularSpeed = 2
 	private let speed = 5
 	
-	public override init(gameScene: SKScene) {
+	public init(gameScene: SKScene, userSpaceShip: SKSpriteNode) {
+		self.userSpaceShip = userSpaceShip
 		super.init(gameScene: gameScene)
-		
+
+		self.ufoSpaceShipShoot = UfoSpaceShipShoot(gameScene: self.gameScene, userSpaceShip: self.userSpaceShip)
 		self.explotionFileName = "ufoexplosion"
 		self.maxExplotionImageIndex = 307
 		self.loadExplosions()
@@ -25,9 +29,10 @@ public class UfoSpaceShip: EnemySpaceShipBase {
 	}
 	
 	internal override func addSpaceShip() {
+		self.ufoSpaceShipShoot!.isShootEnabled = true;
 		let yPosition: CGFloat = MathHelper.random(min: CGRectGetMidY(self.gameScene.frame) - 50, max: CGRectGetMaxY(self.gameScene.frame) + 150)
 		let location = CGPoint(x: CGRectGetMinX(self.gameScene.frame) - 50, y: yPosition)
-		spaceShip = SKSpriteNode(imageNamed:"UFOShip")
+		self.spaceShip = SKSpriteNode(imageNamed:"UFOShip")
 		
 		self.spaceShip.xScale = self.spaceShipScale * 1.25
 		self.spaceShip.yScale = self.spaceShipScale * 1.25
@@ -49,7 +54,11 @@ public class UfoSpaceShip: EnemySpaceShipBase {
 		let anotherUfoAction:SKAction = getAddspaceShipAction()
 		let path:UIBezierPath = UIBezierPath(arcCenter: CGPointMake(location.x, -yPosition), radius: yPosition, startAngle: CGFloat(M_PI_2), endAngle: -CGFloat(M_PI_4 / 2), clockwise: false)
 		let moveAction = SKAction.followPath(path.CGPath, asOffset: true, orientToPath: true, duration: 5.0)
+		let shootAktion = self.getShootAktion()
+		
 		self.spaceShip.runAction(SKAction.sequence([SKAction.waitForDuration(1), moveAction, anotherUfoAction, SKAction.removeFromParent()]))
+		
+		self.gameScene.runAction(shootAktion)
 	}
 	
 	private func getAddspaceShipAction() -> SKAction {
@@ -105,5 +114,20 @@ public class UfoSpaceShip: EnemySpaceShipBase {
 			ufoExplotion.removeFromParent()
 			self.addSpaceShip()
 		})
+	}
+	
+	internal func getShootAktion()-> SKAction {
+		let ufoShootAction:SKAction = SKAction.customActionWithDuration(NSTimeInterval(self.showSpeed), actionBlock: { (node: SKNode!, elapsedTime: CGFloat) -> Void in
+			if(elapsedTime >= CGFloat(self.showSpeed) && self.ufoSpaceShipShoot!.isShootEnabled) {
+				self.addShoot();
+			}
+		})
+		
+		return ufoShootAction
+	}
+	
+	internal override func addShoot() {
+		self.ufoSpaceShipShoot!.isShootEnabled = false;
+		self.ufoSpaceShipShoot!.addShoot(self.spaceShip);
 	}
 }

@@ -30,6 +30,7 @@
 		ADB67AE51D0F7F5C00E9DEB0 /* GameWonScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADB67AE41D0F7F5C00E9DEB0 /* GameWonScene.sks */; };
 		ADCF42691CFB99C30088D102 /* GameStartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCF42681CFB99C30088D102 /* GameStartScene.swift */; };
 		ADCF426B1CFBA1370088D102 /* GameStartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADCF426A1CFBA1370088D102 /* GameStartScene.sks */; };
+		ADF427AD1D627F5600507E97 /* UfoSpaceShipeShoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF427AC1D627F5600507E97 /* UfoSpaceShipeShoot.swift */; };
 		ADFA66BD1D42C07200885A45 /* UfoSpaceShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA66BC1D42C07200885A45 /* UfoSpaceShip.swift */; };
 		ADFA66BF1D42C32F00885A45 /* EnemySpaceShipBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA66BE1D42C32F00885A45 /* EnemySpaceShipBase.swift */; };
 		ADFA66C11D42C46900885A45 /* SpaceShipBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFA66C01D42C46900885A45 /* SpaceShipBase.swift */; };
@@ -86,6 +87,7 @@
 		ADB67AE41D0F7F5C00E9DEB0 /* GameWonScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameWonScene.sks; sourceTree = "<group>"; };
 		ADCF42681CFB99C30088D102 /* GameStartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStartScene.swift; sourceTree = "<group>"; };
 		ADCF426A1CFBA1370088D102 /* GameStartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameStartScene.sks; sourceTree = "<group>"; };
+		ADF427AC1D627F5600507E97 /* UfoSpaceShipeShoot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UfoSpaceShipeShoot.swift; sourceTree = "<group>"; };
 		ADFA66BC1D42C07200885A45 /* UfoSpaceShip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UfoSpaceShip.swift; sourceTree = "<group>"; };
 		ADFA66BE1D42C32F00885A45 /* EnemySpaceShipBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemySpaceShipBase.swift; sourceTree = "<group>"; };
 		ADFA66C01D42C46900885A45 /* SpaceShipBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceShipBase.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				ADFA66C21D42C9BE00885A45 /* EnemySpaceShip.swift */,
 				AD2927461D44428700B16BAA /* UserSpaceShipShot.swift */,
 				AD23238A1D4D810600A7B03A /* UserLife.swift */,
+				ADF427AC1D627F5600507E97 /* UfoSpaceShipeShoot.swift */,
 			);
 			name = Business;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 			files = (
 				AD9438D91CE3F69000196F7D /* GameScene.swift in Sources */,
 				ADCF42691CFB99C30088D102 /* GameStartScene.swift in Sources */,
+				ADF427AD1D627F5600507E97 /* UfoSpaceShipeShoot.swift in Sources */,
 				ADFA66C31D42C9BE00885A45 /* EnemySpaceShip.swift in Sources */,
 				AD9438DB1CE3F69000196F7D /* GameViewController.swift in Sources */,
 				ADFA66BD1D42C07200885A45 /* UfoSpaceShip.swift in Sources */,

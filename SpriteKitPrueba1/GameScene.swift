@@ -33,8 +33,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.addChild(self.userSpaceShip!.createSpaceShip())
 		self.userLife = UserLife(gameScene: self, userSpaceShip: self.userSpaceShip!)
 		self.userLife!.addUserLifes()
-
-		self.ufoSpaceShip = UfoSpaceShip(gameScene: self)
+		
+		self.ufoSpaceShip = UfoSpaceShip(gameScene: self, userSpaceShip: self.userSpaceShip!.spaceShip)
 		self.enemySpaceShip = EnemySpaceShip(gameScene: self)
 		self.loaBackgroundSounds()
 	}
@@ -142,7 +142,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 					(secondBody!.categoryBitMask & PhysicsCategory.UFO.rawValue != 0)) {
 					self.userSpaceShip!.doShipExplotion()
 					self.ufoSpaceShip!.ufoDidCollideWithShip(enemyObject)
-
+					
 					if(self.userLife!.removeUserLife() <= 0) {
 						self.didLose()
 					}
@@ -151,32 +151,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 					(secondBody!.categoryBitMask & PhysicsCategory.Enemy.rawValue != 0)) {
 					self.userSpaceShip!.doShipExplotion()
 					self.enemySpaceShip!.enemyDidCollideWithShip(enemyObject)
-
+					
 					if(self.userLife!.removeUserLife() <= 0) {
 						self.didLose()
 					}
 				}
-				else
-					if(self.userSpaceShip!.isShotEnabled) {
-						if ((firstBody!.categoryBitMask & PhysicsCategory.Shot.rawValue != 0) &&
-							(secondBody!.categoryBitMask & PhysicsCategory.Enemy.rawValue != 0)) {
-							self.userSpaceShip!.disposeShot(userObject)
-							self.enemySpaceShip!.projectileDidCollideWithEnemy(userObject, enemy: enemyObject)
-							self.enemyHitted()
-						}
-						else if ((firstBody!.categoryBitMask & PhysicsCategory.Shot.rawValue != 0) &&
-							(secondBody!.categoryBitMask & PhysicsCategory.UFO.rawValue != 0)) {
-							self.userSpaceShip!.disposeShot(userObject)
-							self.ufoSpaceShip!.projectileDidCollideWithUFO(userObject, ufo: enemyObject)
-							self.ufoHitted()
-						}
-				}
-				/*
 				else if ((firstBody!.categoryBitMask & PhysicsCategory.UserShip.rawValue != 0) &&
-				(secondBody!.categoryBitMask & PhysicsCategory.EnemyShot.rawValue != 0)) {
-				try ufoDidCollideWithShip(userObject, ufo: enemyObject)
-				}*/
-				
+					(secondBody!.categoryBitMask & PhysicsCategory.EnemyShot.rawValue != 0)) {
+					self.userSpaceShip!.doShipExplotion()
+				}
+				else if(self.userSpaceShip!.isShotEnabled) {
+					if ((firstBody!.categoryBitMask & PhysicsCategory.Shot.rawValue != 0) &&
+						(secondBody!.categoryBitMask & PhysicsCategory.Enemy.rawValue != 0)) {
+						self.userSpaceShip!.disposeShot(userObject)
+						self.enemySpaceShip!.projectileDidCollideWithEnemy(userObject, enemy: enemyObject)
+						self.enemyHitted()
+					}
+					else if ((firstBody!.categoryBitMask & PhysicsCategory.Shot.rawValue != 0) &&
+						(secondBody!.categoryBitMask & PhysicsCategory.UFO.rawValue != 0)) {
+						self.userSpaceShip!.disposeShot(userObject)
+						self.ufoSpaceShip!.projectileDidCollideWithUFO(userObject, ufo: enemyObject)
+						self.ufoHitted()
+					}
+				}
 			}
 		}
 		//		catch let error as NSError {

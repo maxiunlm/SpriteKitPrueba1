@@ -32,4 +32,7 @@ public class SpaceShipBase {
 	
 	internal func addSpaceShip() {
 	}
+	
+	internal func addShoot() {
+	}
 }
