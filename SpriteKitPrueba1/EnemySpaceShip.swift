@@ -11,14 +11,15 @@ import SpriteKit
 
 
 public class EnemySpaceShip: EnemySpaceShipBase {
+	private var enemySpaceShipShoot: EnemySpaceShipShoot?
 	private let showEnemySpeed = 3
 	private let enemySpeed = 5
-	//private var enemySemaphore = dispatch_semaphore_create(0)
 	private let enemyShipRunActionKey: String = "enemyShip.runAction-Key"
 	
 	public override init(gameScene: SKScene) {
 		super.init(gameScene: gameScene)
-
+		
+		self.enemySpaceShipShoot = EnemySpaceShipShoot(gameScene: self.gameScene)
 		self.explotionFileName = "explosion"
 		self.maxExplotionImageIndex = 169
 		self.loadExplosions()
@@ -26,30 +27,34 @@ public class EnemySpaceShip: EnemySpaceShipBase {
 	}
 	
 	internal override func addSpaceShip() {
+		self.enemySpaceShipShoot!.isShootEnabled = true;
 		let xPosition: CGFloat = MathHelper.random(min: CGRectGetMinX(self.gameScene.frame) + 22, max: CGRectGetMaxX(self.gameScene.frame) - 22)
 		let location = CGPoint(x: xPosition, y: CGRectGetMaxY(self.gameScene.frame) + 50)
-		let enemyShip: SKSpriteNode = SKSpriteNode(imageNamed:"EnemyShip")
+		self.spaceShip = SKSpriteNode(imageNamed:"EnemyShip")
 		let toYDestination = CGRectGetMinY(self.gameScene.frame) - CGRectGetMidY(self.gameScene.frame) / 3;
 		
-		enemyShip.xScale = self.spaceShipScale
-		enemyShip.yScale = self.spaceShipScale
-		enemyShip.position = location
-		enemyShip.zPosition = 0
+		self.spaceShip.xScale = self.spaceShipScale
+		self.spaceShip.yScale = self.spaceShipScale
+		self.spaceShip.position = location
+		self.spaceShip.zPosition = 0
 		
-		enemyShip.physicsBody = SKPhysicsBody(circleOfRadius: enemyShip.size.width / 2)
-		enemyShip.physicsBody?.dynamic = true
-		enemyShip.physicsBody?.categoryBitMask = PhysicsCategory.Enemy.rawValue
-		enemyShip.physicsBody?.contactTestBitMask = PhysicsCategory.Shot.rawValue
-		enemyShip.physicsBody?.collisionBitMask = PhysicsCategory.None.rawValue
-		enemyShip.physicsBody?.usesPreciseCollisionDetection = false
+		self.spaceShip.physicsBody = SKPhysicsBody(circleOfRadius: self.spaceShip.size.width / 2)
+		self.spaceShip.physicsBody?.dynamic = true
+		self.spaceShip.physicsBody?.categoryBitMask = PhysicsCategory.Enemy.rawValue
+		self.spaceShip.physicsBody?.contactTestBitMask = PhysicsCategory.Shot.rawValue
+		self.spaceShip.physicsBody?.collisionBitMask = PhysicsCategory.None.rawValue
+		self.spaceShip.physicsBody?.usesPreciseCollisionDetection = false
 		
-		self.gameScene.addChild(enemyShip)
+		self.gameScene.addChild(self.spaceShip)
 		
 		let anotherEnemyAction:SKAction = getAddEnemyShipAction()
 		let moveAction = SKAction.moveToY(toYDestination, duration: NSTimeInterval(enemySpeed))
+		let shootAktion = self.getShootAktion()
 		
-		enemyShip.runAction(SKAction.sequence([SKAction.waitForDuration(1), moveAction, anotherEnemyAction, SKAction.removeFromParent()]),
-		                    withKey: enemyShipRunActionKey)
+		self.spaceShip.runAction(SKAction.sequence([SKAction.waitForDuration(1), moveAction, anotherEnemyAction, SKAction.removeFromParent()]),
+		                         withKey: enemyShipRunActionKey)
+		
+		self.gameScene.runAction(shootAktion)
 	}
 	
 	private func getAddEnemyShipAction() -> SKAction {
@@ -103,5 +108,21 @@ public class EnemySpaceShip: EnemySpaceShipBase {
 	public func projectileDidCollideWithEnemy(shot: SKSpriteNode, enemy: SKSpriteNode) {
 		doEnemyExplosion(enemy)
 		playExplotionSound()
+	}
+	
+	internal func getShootAktion()-> SKAction {
+		let showSpeedShoot = self.enemySpeed / 2
+		let enemyShootAction:SKAction = SKAction.customActionWithDuration(NSTimeInterval(self.showEnemySpeed), actionBlock: { (node: SKNode!, elapsedTime: CGFloat) -> Void in
+			if(elapsedTime >= CGFloat(showSpeedShoot) && self.enemySpaceShipShoot!.isShootEnabled) {
+				self.addShoot();
+			}
+		})
+		
+		return enemyShootAction
+	}
+	
+	internal override func addShoot() {
+		self.enemySpaceShipShoot!.isShootEnabled = false;
+		self.enemySpaceShipShoot!.addShoot(self.spaceShip);
 	}
 }

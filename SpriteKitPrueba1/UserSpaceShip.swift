@@ -47,7 +47,7 @@ public class UserSpaceShip: SpaceShipBase {
 	}
 	public var isShotEnabled: Bool {
 		get {
-			return self.userSpaceShipShoot!.isShotEnabled
+			return self.userSpaceShipShoot!.isShootEnabled
 		}
 	}
 	
@@ -62,7 +62,7 @@ public class UserSpaceShip: SpaceShipBase {
 	}
 	
 	public func doShipExplotion() {
-		self.userSpaceShipShoot!.isShotEnabled = false
+		self.userSpaceShipShoot!.isShootEnabled = false
 		let path = NSBundle.mainBundle().pathForResource("ShipExplotionParticle", ofType: "sks")
 		let shipExplotionParticle = NSKeyedUnarchiver.unarchiveObjectWithFile(path!) as! SKEmitterNode
 		
@@ -88,7 +88,7 @@ public class UserSpaceShip: SpaceShipBase {
 	}
 
 	internal override func addShoot() {
-		self.userSpaceShipShoot!.isShotEnabled = true
+		self.userSpaceShipShoot!.isShootEnabled = true
 		self.userSpaceShipShoot!.addShoot();
 	}
 	

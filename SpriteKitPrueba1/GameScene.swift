@@ -142,23 +142,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 					(secondBody!.categoryBitMask & PhysicsCategory.UFO.rawValue != 0)) {
 					self.userSpaceShip!.doShipExplotion()
 					self.ufoSpaceShip!.ufoDidCollideWithShip(enemyObject)
-					
-					if(self.userLife!.removeUserLife() <= 0) {
-						self.didLose()
-					}
+					self.removeUserLife()
 				}
 				else if ((firstBody!.categoryBitMask & PhysicsCategory.UserShip.rawValue != 0) &&
 					(secondBody!.categoryBitMask & PhysicsCategory.Enemy.rawValue != 0)) {
 					self.userSpaceShip!.doShipExplotion()
 					self.enemySpaceShip!.enemyDidCollideWithShip(enemyObject)
-					
-					if(self.userLife!.removeUserLife() <= 0) {
-						self.didLose()
-					}
+					self.removeUserLife()
 				}
 				else if ((firstBody!.categoryBitMask & PhysicsCategory.UserShip.rawValue != 0) &&
 					(secondBody!.categoryBitMask & PhysicsCategory.EnemyShot.rawValue != 0)) {
 					self.userSpaceShip!.doShipExplotion()
+					self.removeUserLife()
 				}
 				else if(self.userSpaceShip!.isShotEnabled) {
 					if ((firstBody!.categoryBitMask & PhysicsCategory.Shot.rawValue != 0) &&
@@ -180,7 +175,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		//			print("Unexpected ERROR \( error.description )")
 		//		}
 	}
-	
+
+	private func removeUserLife() {
+		if(self.userLife!.removeUserLife() <= 0) {
+			self.didLose()
+		}
+	}
+
 	private func enemyHitted() {
 		self.addPointsToHits(1)
 		self.didWon()
