@@ -58,7 +58,7 @@ public class UserSpaceShip: SpaceShipBase {
 		self.spaceShip = SKSpriteNode(imageNamed:"UserShip")
 		self._yUserShipPosition = self.gameScene.frame.minY + CGFloat(separator)
 		self.userSpaceShipShoot = UserSpaceShipShoot(gameScene: self.gameScene, userSpaceShip: self.spaceShip)
-		self.addShoot()
+		//self.addShoot()
 	}
 	
 	public func doShipExplotion() {
@@ -79,17 +79,18 @@ public class UserSpaceShip: SpaceShipBase {
 		let showShipAction:SKAction = SKAction.customActionWithDuration(NSTimeInterval(self.spaceShipExplosionTime), actionBlock: { (node: SKNode!, elapsedTime: CGFloat) -> Void in
 			if(elapsedTime >= CGFloat(self.spaceShipExplosionTime) && elapsedTime > CGFloat(self.userSpaceShipShoot!.shottingSpeed) * 2) {
 				self.spaceShip.position = CGPoint(x: CGRectGetMidX(self.gameScene.frame), y: self.yUserShipPosition)
-				self.addShoot()
+				self.userSpaceShipShoot!.isShootEnabled = true
 			}
 		})
 		self.gameScene.addChild(shipExplotionParticle)
 		
 		shipExplotionParticle.runAction(SKAction.sequence([hiddenShipAction, SKAction.waitForDuration(1), showShipAction, SKAction.removeFromParent()]))
 	}
-
-	internal override func addShoot() {
-		self.userSpaceShipShoot!.isShootEnabled = true
-		self.userSpaceShipShoot!.addShoot();
+	
+	public override func addShoot() {
+		if(self.userSpaceShipShoot!.isShootEnabled == true) {
+			self.userSpaceShipShoot!.addShoot();
+		}
 	}
 	
 	public func createSpaceShip() -> SKSpriteNode {

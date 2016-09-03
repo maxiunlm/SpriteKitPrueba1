@@ -30,6 +30,11 @@ public class UserSpaceShipShoot {
 	
 	
 	public func addShoot() {
+		if(self.isShootEnabled == false) {
+			return
+		}
+		
+		self.isShootEnabled = false
 		let location = CGPoint(x: userSpaceShip.position.x, y: self.userSpaceShip.position.y + (self.userSpaceShip.size.height / 2) )
 		let shoot = SKSpriteNode(imageNamed: "Shoot")
 		
@@ -59,5 +64,7 @@ public class UserSpaceShipShoot {
 		if(isShootEnabled) {
 			self.gameScene.runAction(SKAction.sequence([ SKAction.waitForDuration(shottingSpeed), anotherShotAction]))
 		}
+		
+		self.isShootEnabled = true
 	}
 }

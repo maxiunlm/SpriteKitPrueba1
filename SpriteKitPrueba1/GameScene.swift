@@ -18,6 +18,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	private var pointsCounter:SKLabelNode = SKLabelNode()//fontNamed:"Chalkduster")
 	private let separator = 50
 	private let menuBackName = "MenuBack"
+	private let shootButtonName = "ShootButtonName"
 	private let hitsLabelText:String = "Hits:"
 	private var hitsLabelPoints:Int = 0	
 	
@@ -37,8 +38,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.ufoSpaceShip = UfoSpaceShip(gameScene: self, userSpaceShip: self.userSpaceShip!.spaceShip)
 		self.enemySpaceShip = EnemySpaceShip(gameScene: self)
 		self.loaBackgroundSounds()
+		self.addShootButton()
 	}
 	
+	private func addShootButton() {
+		let shootButton = SKSpriteNode(imageNamed: "shootButton")
+		
+		shootButton.name = shootButtonName
+		shootButton.setScale(0.5)
+		shootButton.position = CGPoint(x: Int(self.frame.maxX) - separator, y: Int(self.frame.minY) + separator)
+
+		self.addChild(shootButton)
+	}
+
 	private func addPointsCounter() {
 		let pointsText = NSString(format: "%03d", hitsLabelPoints)
 		
@@ -86,8 +98,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			
 			if let elementName = self.nodeAtPoint(location).name {
 				if elementName == menuBackName {
-					didMenu()
+					self.didMenu()
 				}
+				else if elementName == shootButtonName {
+					self.userSpaceShip!.addShoot()
+				}
+
+				return
 			}
 			
 			let duration: Double = abs(Double((userSpaceShip!.position.x - location.x) / (CGRectGetWidth(self.frame) * 2)))
@@ -155,19 +172,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 					self.userSpaceShip!.doShipExplotion()
 					self.removeUserLife()
 				}
-				else if(self.userSpaceShip!.isShotEnabled) {
-					if ((firstBody!.categoryBitMask & PhysicsCategory.Shot.rawValue != 0) &&
-						(secondBody!.categoryBitMask & PhysicsCategory.Enemy.rawValue != 0)) {
-						self.userSpaceShip!.disposeShot(userObject)
-						self.enemySpaceShip!.projectileDidCollideWithEnemy(userObject, enemy: enemyObject)
-						self.enemyHitted()
-					}
-					else if ((firstBody!.categoryBitMask & PhysicsCategory.Shot.rawValue != 0) &&
-						(secondBody!.categoryBitMask & PhysicsCategory.UFO.rawValue != 0)) {
-						self.userSpaceShip!.disposeShot(userObject)
-						self.ufoSpaceShip!.projectileDidCollideWithUFO(userObject, ufo: enemyObject)
-						self.ufoHitted()
-					}
+				else if ((firstBody!.categoryBitMask & PhysicsCategory.Shot.rawValue != 0) &&
+					(secondBody!.categoryBitMask & PhysicsCategory.Enemy.rawValue != 0)) {
+					self.userSpaceShip!.disposeShot(userObject)
+					self.enemySpaceShip!.projectileDidCollideWithEnemy(userObject, enemy: enemyObject)
+					self.enemyHitted()
+				}
+				else if ((firstBody!.categoryBitMask & PhysicsCategory.Shot.rawValue != 0) &&
+					(secondBody!.categoryBitMask & PhysicsCategory.UFO.rawValue != 0)) {
+					self.userSpaceShip!.disposeShot(userObject)
+					self.ufoSpaceShip!.projectileDidCollideWithUFO(userObject, ufo: enemyObject)
+					self.ufoHitted()
 				}
 			}
 		}
@@ -175,13 +190,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		//			print("Unexpected ERROR \( error.description )")
 		//		}
 	}
-
+	
 	private func removeUserLife() {
 		if(self.userLife!.removeUserLife() <= 0) {
 			self.didLose()
 		}
 	}
-
+	
 	private func enemyHitted() {
 		self.addPointsToHits(1)
 		self.didWon()
