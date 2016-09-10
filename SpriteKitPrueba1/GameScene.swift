@@ -19,8 +19,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	private let separator = 50
 	private let menuBackName = "MenuBack"
 	private let shootButtonName = "ShootButtonName"
+	private let userSpaceShipName = "UserSpaceShipName"
 	private let hitsLabelText:String = "Hits:"
-	private var hitsLabelPoints:Int = 0	
+	private var hitsLabelPoints:Int = 0
+	private var fingureIsOnUserSpaceShip = false
 	
 	override func didMoveToView(view: SKView) {
 		self.physicsWorld.gravity = CGVectorMake(0, 0)
@@ -38,19 +40,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.ufoSpaceShip = UfoSpaceShip(gameScene: self, userSpaceShip: self.userSpaceShip!.spaceShip)
 		self.enemySpaceShip = EnemySpaceShip(gameScene: self)
 		self.loaBackgroundSounds()
-		self.addShootButton()
+		self.addShootButtons()
 	}
 	
-	private func addShootButton() {
+	private func addShootButtons() {
+		addShootButton(Int(self.frame.maxX) - separator)
+		addShootButton(Int(self.frame.minX) + separator)
+	}
+	
+	private func addShootButton(x: Int) {
 		let shootButton = SKSpriteNode(imageNamed: "shootButton")
 		
 		shootButton.name = shootButtonName
 		shootButton.setScale(0.5)
-		shootButton.position = CGPoint(x: Int(self.frame.maxX) - separator, y: Int(self.frame.minY) + separator)
-
+		shootButton.position = CGPoint(x: x, y: Int(self.frame.minY) + separator)
+		
 		self.addChild(shootButton)
 	}
-
+	
 	private func addPointsCounter() {
 		let pointsText = NSString(format: "%03d", hitsLabelPoints)
 		
@@ -67,7 +74,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		let menuBack = SKLabelNode()
 		
 		menuBack.fontName = "Apple Color Emoji"
-		menuBack.text = "Menu"// \(self.size.width)x\(self.size.height)"
+		menuBack.text = "Menu"
 		menuBack.name = menuBackName
 		menuBack.fontSize = 22
 		menuBack.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Bottom
@@ -77,9 +84,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 	
 	private func loaBackgroundSounds() {
-		//		let backgroundMusic = SKAudioNode(fileNamed: "engine.wav")
-		//		backgroundMusic.autoplayLooped = true
-		//		addChild(backgroundMusic)
+		let backgroundMusic = SKAudioNode(fileNamed: "engine.wav")
+		backgroundMusic.autoplayLooped = true
+		
+		self.addChild(backgroundMusic)
 	}
 	
 	private func setBackgroundImage() {
@@ -97,13 +105,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			let location = touch.locationInNode(self)
 			
 			if let elementName = self.nodeAtPoint(location).name {
-				if elementName == menuBackName {
+				if (elementName == menuBackName) {
 					self.didMenu()
 				}
-				else if elementName == shootButtonName {
+				else if (elementName == shootButtonName) {
 					self.userSpaceShip!.addShoot()
 				}
-
+				else if (elementName == userSpaceShipName) {
+					if (self.nodeAtPoint(location) == self.userSpaceShip!.spaceShip) {
+						self.fingureIsOnUserSpaceShip = true
+					}
+				}
+				
 				return
 			}
 			
@@ -120,6 +133,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			self.userSpaceShip!.runAction(action, completion: {() -> Void in
 				self.userSpaceShip!.texture = self.userSpaceShip!.spaceShipQuiet
 			})
+		}
+	}
+	
+	override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+		self.fingureIsOnUserSpaceShip = true
+	}
+	
+	override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+		self.fingureIsOnUserSpaceShip = true
+	}
+	
+	override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+		if (self.fingureIsOnUserSpaceShip) {
+			if let touch = touches.first as UITouch? {
+				let touchLoc = touch.locationInNode(self)
+				let prevTouchLoc = touch.previousLocationInNode(self)
+				//let ninja = self.childNodeWithName(playCategoryName) as! SKSpriteNode
+				var newYPos = self.userSpaceShip!.position.y + (touchLoc.y - prevTouchLoc.y)
+				var newXPos = self.userSpaceShip!.position.x + (touchLoc.x - prevTouchLoc.x)
+				
+				newYPos = max(newYPos, self.userSpaceShip!.size.height / 2)
+				newYPos = min(newYPos, self.size.height - self.userSpaceShip!.size.height / 2)
+				
+				newXPos = max(newXPos, self.userSpaceShip!.size.width / 2)
+				newXPos = min(newXPos, self.size.width - self.userSpaceShip!.size.width / 2)
+				
+				//set new X and Y for your sprite.
+				self.userSpaceShip!.position = CGPointMake(newXPos, newYPos)
+			}
 		}
 	}
 	

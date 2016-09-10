@@ -13,6 +13,7 @@ import SpriteKit
 public class UserSpaceShip: SpaceShipBase {
 	private var userSpaceShipShoot: UserSpaceShipShoot?
 	private var _yUserShipPosition : CGFloat?
+	private let userSpaceShipName = "UserSpaceShipName"
 	private let separator = 50
 	public let spaceShipQuiet: SKTexture = SKTexture(imageNamed:"UserShip")
 	public let spaceShipToLeft: SKTexture = SKTexture(imageNamed:"UserShipToLeft")
@@ -100,6 +101,7 @@ public class UserSpaceShip: SpaceShipBase {
 		self.spaceShip.yScale = self.spaceShipScale
 		self.position = location
 		self.spaceShip.zPosition = 500
+		self.spaceShip.name = self.userSpaceShipName
 		
 		self.spaceShip.physicsBody = SKPhysicsBody(circleOfRadius: spaceShip.size.width / 2)
 		self.spaceShip.physicsBody?.dynamic = true
