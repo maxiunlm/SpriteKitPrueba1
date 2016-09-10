@@ -11,7 +11,7 @@ import SpriteKit
 
 public class SpaceShipBase {
 	internal var spaceShip: SKSpriteNode = SKSpriteNode()
-	internal let spaceShipScale: CGFloat = CGFloat(0.5)
+	internal let spaceShipScale: CGFloat = CGFloat(2)
 	internal let spaceShipExplosionTime: NSTimeInterval = NSTimeInterval(1)
 	internal let timeForExplotionSound: NSTimeInterval = NSTimeInterval(5)
 	internal let timePerFrameAnimation: NSTimeInterval = NSTimeInterval(0.025)
