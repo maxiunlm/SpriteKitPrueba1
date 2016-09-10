@@ -62,10 +62,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		let pointsText = NSString(format: "%03d", hitsLabelPoints)
 		
 		pointsCounter.fontName = "Apple Color Emoji"
-		pointsCounter.text = "\(hitsLabelText) \(pointsText)"
+		pointsCounter.text = "\(hitsLabelText)\(pointsText)"
 		pointsCounter.fontSize = 22
 		pointsCounter.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Bottom
-		pointsCounter.position = CGPoint(x: Int(self.frame.width) - (separator * 2), y: Int(self.frame.height) - (separator / 2))
+		pointsCounter.position = CGPoint(x: Int(Double(self.frame.width) - (Double(separator) * 1.5)), y: Int(self.frame.height) - (separator / 2))
 		
 		self.addChild(pointsCounter)
 	}
@@ -78,7 +78,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		menuBack.name = menuBackName
 		menuBack.fontSize = 22
 		menuBack.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Bottom
-		menuBack.position = CGPoint(x: Int(self.frame.midX) - (separator / 6), y: Int(self.frame.height) - (separator / 2))
+		menuBack.position = CGPoint(x: Int(self.frame.midX) - (separator / 5), y: Int(self.frame.height) - (separator / 2))
 		
 		self.addChild(menuBack)
 	}
@@ -120,19 +120,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 				return
 			}
 			
+			/*
 			let duration: Double = abs(Double((userSpaceShip!.position.x - location.x) / (CGRectGetWidth(self.frame) * 2)))
 			
 			if(self.userSpaceShip!.position.x - location.x > 0) {
-				self.userSpaceShip!.texture = self.userSpaceShip!.spaceShipToLeft
+			self.userSpaceShip!.texture = self.userSpaceShip!.spaceShipToLeft
 			} else {
-				self.userSpaceShip!.texture = self.userSpaceShip!.spaceShipToRight
+			self.userSpaceShip!.texture = self.userSpaceShip!.spaceShipToRight
 			}
 			
 			let action = SKAction.moveToX(location.x, duration: duration)
 			
 			self.userSpaceShip!.runAction(action, completion: {() -> Void in
-				self.userSpaceShip!.texture = self.userSpaceShip!.spaceShipQuiet
+			self.userSpaceShip!.texture = self.userSpaceShip!.spaceShipQuiet
 			})
+			*/
 		}
 	}
 	

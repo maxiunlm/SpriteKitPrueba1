@@ -11,7 +11,7 @@ import SpriteKit
 
 
 public class UserLife {
-	private let separator = 50
+	private let separator = 40
 	private let userLifesMaxCount = 3
 	private var userLifesCounter = 3
 	private var userLifeShips:[SKSpriteNode] = []
@@ -35,8 +35,8 @@ public class UserLife {
 		let location = CGPoint(x: self.separator * userLifeItem, y: Int(self.gameScene.frame.height) - (self.separator / 2))
 		let userLifeShip = SKSpriteNode(imageNamed:"UserLife")
 		
-		userLifeShip.xScale = self.userSpaceShip.spaceShipScale / 1.5
-		userLifeShip.yScale = self.userSpaceShip.spaceShipScale / 1.5
+		userLifeShip.xScale = self.userSpaceShip.spaceShipScale / 2.5
+		userLifeShip.yScale = self.userSpaceShip.spaceShipScale / 2.5
 		userLifeShip.position = location
 		userLifeShip.zPosition = 1000
 		

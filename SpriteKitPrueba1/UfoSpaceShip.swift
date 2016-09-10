@@ -34,8 +34,8 @@ public class UfoSpaceShip: EnemySpaceShipBase {
 		let location = CGPoint(x: CGRectGetMinX(self.gameScene.frame) - 50, y: yPosition)
 		self.spaceShip = SKSpriteNode(imageNamed:"UFOShip")
 		
-		self.spaceShip.xScale = self.spaceShipScale * 1.25
-		self.spaceShip.yScale = self.spaceShipScale * 1.25
+		self.spaceShip.xScale = self.spaceShipScale
+		self.spaceShip.yScale = self.spaceShipScale
 		self.spaceShip.position = location
 		self.spaceShip.zPosition = 100
 		
