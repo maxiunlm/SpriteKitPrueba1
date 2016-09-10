@@ -11,7 +11,7 @@ import SpriteKit
 
 
 public class UfoSpaceShipShoot {
-	private let shootScale:CGFloat = CGFloat(0.7)
+	private let shootScale:CGFloat = CGFloat(2)
 	private var gameScene: SKScene
 	private var userSpaceShip: SKSpriteNode
 	public let shottingSpeed = 0.3

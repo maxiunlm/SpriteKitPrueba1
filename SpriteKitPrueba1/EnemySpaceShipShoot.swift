@@ -11,7 +11,7 @@ import SpriteKit
 
 
 public class EnemySpaceShipShoot {
-	private let shootScale:CGFloat = CGFloat(1.7)
+	private let shootScale:CGFloat = CGFloat(2)
 	private var gameScene: SKScene
 	public let shottingSpeed = 0.3
 	public var isShootEnabled = true
