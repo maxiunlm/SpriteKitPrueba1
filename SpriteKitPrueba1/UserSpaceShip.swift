@@ -59,7 +59,6 @@ public class UserSpaceShip: SpaceShipBase {
 		self.spaceShip = SKSpriteNode(imageNamed:"UserShip")
 		self._yUserShipPosition = self.gameScene.frame.minY + CGFloat(separator)
 		self.userSpaceShipShoot = UserSpaceShipShoot(gameScene: self.gameScene, userSpaceShip: self.spaceShip)
-		//self.addShoot()
 	}
 	
 	public func doShipExplotion() {
@@ -109,8 +108,6 @@ public class UserSpaceShip: SpaceShipBase {
 		self.spaceShip.physicsBody?.contactTestBitMask = PhysicsCategory.Enemy.rawValue + PhysicsCategory.UFO.rawValue
 		self.spaceShip.physicsBody?.collisionBitMask = PhysicsCategory.None.rawValue
 		self.spaceShip.physicsBody?.usesPreciseCollisionDetection = true
-		
-		//self.addChild(spaceShip)
 		
 		return spaceShip
 	}
