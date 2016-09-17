@@ -1,8 +1,19 @@
 import Foundation
 import SpriteKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
 
-public class EnemySpaceShipBase: SpaceShipBase{
+
+open class EnemySpaceShipBase: SpaceShipBase{
 	internal var spaceShipExplosionImages: [SKTexture] = []
 	internal var explotionFileName: String?
 	internal var maxExplotionImageIndex: Int?

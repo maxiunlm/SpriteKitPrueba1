@@ -10,36 +10,36 @@ import Foundation
 import SpriteKit
 
 class GameWonScene: SKScene {
-	override func didMoveToView(view: SKView) {
+	override func didMove(to view: SKView) {
 		steBackgroundImage()
 		loaBackgroundSounds()
 	}
 
-	private func steBackgroundImage() {
+	fileprivate func steBackgroundImage() {
 		let spaceBackground = SKSpriteNode(imageNamed:"won")
 
 		spaceBackground.zPosition = -1000
-		spaceBackground.size = CGSizeMake(CGRectGetMaxX(self.frame), CGRectGetMaxY(self.frame))
-		spaceBackground.position = CGPoint(x: CGRectGetMidX(self.frame), y: CGRectGetMidY(self.frame))
+		spaceBackground.size = CGSize(width: self.frame.maxX, height: self.frame.maxY)
+		spaceBackground.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
 
-		backgroundColor = SKColor.blackColor()
+		backgroundColor = SKColor.black
 		addChild(spaceBackground)
 	}
 
-	private func loaBackgroundSounds() {
+	fileprivate func loaBackgroundSounds() {
 		let backgroundMusic = SKAudioNode(fileNamed: "engine.wav")
 		backgroundMusic.autoplayLooped = true
 		addChild(backgroundMusic)
 	}
 
-	override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 		if let scene = GameScene(fileNamed:"GameScene") {
 			scene.size = self.size
-			scene.scaleMode = .AspectFill
+			scene.scaleMode = .aspectFill
 			self.removeAllActions()
 			self.removeAllChildren()
 
-			let transition = SKTransition.fadeWithDuration(1)
+			let transition = SKTransition.fade(withDuration: 1)
 			self.view?.presentScene(scene, transition: transition)
 		}
 	}

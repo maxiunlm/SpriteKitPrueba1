@@ -14,19 +14,19 @@ import SpriteKit
 class UserSpaceShipInternalMock: SKSpriteNode {
 	internal var runActionMockHasBeenCalled: Bool = false
 	
-	override func runAction(action: SKAction, completion block: () -> Void){
+	override func run(_ action: SKAction, completion block: @escaping () -> Void){
 		self.runActionMockHasBeenCalled = true;
 	}
 }
 
 
 class UserSpaceShipTests: XCTestCase {
-	private var sut: UserSpaceShip = UserSpaceShip(frame: CGRect())
+	fileprivate var sut: UserSpaceShip = UserSpaceShip(frame: CGRect())
 	
 	/// FIXTURE {
 	
-	private let frame = CGRect()
-	private let userSpaceShipInternalMock = UserSpaceShipInternalMock()
+	fileprivate let frame = CGRect()
+	fileprivate let userSpaceShipInternalMock = UserSpaceShipInternalMock()
 	
 	/// } FIXTURE
 	
@@ -34,7 +34,7 @@ class UserSpaceShipTests: XCTestCase {
 	override func setUp() {
 		super.setUp()
 		
-		sut = UserSpaceShip(frame: self.frame)
+		sut = UserSpaceShip(gameScene: self.frame)
 	}
 	
 	override func tearDown() {
@@ -43,9 +43,9 @@ class UserSpaceShipTests: XCTestCase {
 	
 	func test_init_withFrame_SetsItToItsInternalFrameProperty() {
 		
-		sut = UserSpaceShip(frame: self.frame)
+		sut = UserSpaceShip(gameScene: self.frame)
 		
-		XCTAssertEqual(self.frame, sut.frame)
+		XCTAssertEqual(self.gameScene, sut.gameScene)
 	}
 	
 	func test_init_withoutParameters_InvokesRunActionMethod() {
@@ -58,7 +58,7 @@ class UserSpaceShipTests: XCTestCase {
 	}
 	
 	func testPerformanceExample() {
-		self.measureBlock {
+		self.measure {
 		}
 	}
 	

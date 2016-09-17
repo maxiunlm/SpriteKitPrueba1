@@ -12,14 +12,14 @@ import SpriteKit
 //import Darwin
 
 
-public class MathHelper {
+open class MathHelper {
 
 
-	public static func random() -> CGFloat {
+	open static func random() -> CGFloat {
 		return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
 	}
 
-	public static func random(min min: CGFloat, max: CGFloat) -> CGFloat {
+	open static func random(min: CGFloat, max: CGFloat) -> CGFloat {
 		return random() * (max - min) + min
 	}
 }

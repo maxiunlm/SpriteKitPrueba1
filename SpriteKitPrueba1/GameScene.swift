@@ -9,23 +9,23 @@
 import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-	private var userSpaceShip: UserSpaceShip?
-	private var ufoSpaceShip: UfoSpaceShip?
-	private var enemySpaceShip: EnemySpaceShip?
-	private var userLife: UserLife?
+	fileprivate var userSpaceShip: UserSpaceShip?
+	fileprivate var ufoSpaceShip: UfoSpaceShip?
+	fileprivate var enemySpaceShip: EnemySpaceShip?
+	fileprivate var userLife: UserLife?
 	
 	
-	private var pointsCounter:SKLabelNode = SKLabelNode()//fontNamed:"Chalkduster")
-	private let separator = 50
-	private let menuBackName = "MenuBack"
-	private let shootButtonName = "ShootButtonName"
-	private let userSpaceShipName = "UserSpaceShipName"
-	private let hitsLabelText:String = "Hits:"
-	private var hitsLabelPoints:Int = 0
-	private var fingureIsOnUserSpaceShip = false
+	fileprivate var pointsCounter:SKLabelNode = SKLabelNode()//fontNamed:"Chalkduster")
+	fileprivate let separator = 50
+	fileprivate let menuBackName = "MenuBack"
+	fileprivate let shootButtonName = "ShootButtonName"
+	fileprivate let userSpaceShipName = "UserSpaceShipName"
+	fileprivate let hitsLabelText:String = "Hits:"
+	fileprivate var hitsLabelPoints:Int = 0
+	fileprivate var fingureIsOnUserSpaceShip = false
 	
-	override func didMoveToView(view: SKView) {
-		self.physicsWorld.gravity = CGVectorMake(0, 0)
+	override func didMove(to view: SKView) {
+		self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
 		self.physicsWorld.contactDelegate = self
 		self.setBackgroundImage()
 		
@@ -43,12 +43,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.addShootButtons()
 	}
 	
-	private func addShootButtons() {
+	fileprivate func addShootButtons() {
 		addShootButton(Int(self.frame.maxX) - separator)
 		addShootButton(Int(self.frame.minX) + separator)
 	}
 	
-	private func addShootButton(x: Int) {
+	fileprivate func addShootButton(_ x: Int) {
 		let shootButton = SKSpriteNode(imageNamed: "shootButton")
 		
 		shootButton.name = shootButtonName
@@ -58,53 +58,53 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		self.addChild(shootButton)
 	}
 	
-	private func addPointsCounter() {
+	fileprivate func addPointsCounter() {
 		let pointsText = NSString(format: "%03d", hitsLabelPoints)
 		
 		pointsCounter.fontName = "Apple Color Emoji"
 		pointsCounter.text = "\(hitsLabelText)\(pointsText)"
 		pointsCounter.fontSize = 22
-		pointsCounter.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Bottom
+		pointsCounter.verticalAlignmentMode = SKLabelVerticalAlignmentMode.bottom
 		pointsCounter.position = CGPoint(x: Int(Double(self.frame.width) - (Double(separator) * 1.5)), y: Int(self.frame.height) - (separator / 2))
 		
 		self.addChild(pointsCounter)
 	}
 	
-	private func addMenuBack() {
+	fileprivate func addMenuBack() {
 		let menuBack = SKLabelNode()
 		
 		menuBack.fontName = "Apple Color Emoji"
 		menuBack.text = "Menu"
 		menuBack.name = menuBackName
 		menuBack.fontSize = 22
-		menuBack.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Bottom
+		menuBack.verticalAlignmentMode = SKLabelVerticalAlignmentMode.bottom
 		menuBack.position = CGPoint(x: Int(self.frame.midX) - (separator / 5), y: Int(self.frame.height) - (separator / 2))
 		
 		self.addChild(menuBack)
 	}
 	
-	private func loaBackgroundSounds() {
+	fileprivate func loaBackgroundSounds() {
 		let backgroundMusic = SKAudioNode(fileNamed: "engine.wav")
 		backgroundMusic.autoplayLooped = true
 		
 		self.addChild(backgroundMusic)
 	}
 	
-	private func setBackgroundImage() {
+	fileprivate func setBackgroundImage() {
 		let spaceBackground = SKSpriteNode(imageNamed:"SpaceBackground")
 		spaceBackground.zPosition = -1000
-		spaceBackground.position = CGPoint (x: CGRectGetMidX(self.frame), y: CGRectGetMidY(self.frame))
-		spaceBackground.size = CGSizeMake(CGRectGetMaxX(self.frame), CGRectGetMaxY(self.frame))
+		spaceBackground.position = CGPoint (x: self.frame.midX, y: self.frame.midY)
+		spaceBackground.size = CGSize(width: self.frame.maxX, height: self.frame.maxY)
 		
-		backgroundColor = SKColor.blackColor()
+		backgroundColor = SKColor.black
 		addChild(spaceBackground)
 	}
 	
-	override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		for touch in touches {
-			let location = touch.locationInNode(self)
+			let location = touch.location(in: self)
 			
-			if let elementName = self.nodeAtPoint(location).name {
+			if let elementName = self.atPoint(location).name {
 				if (elementName == menuBackName) {
 					self.didMenu()
 				}
@@ -112,7 +112,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 					self.userSpaceShip!.addShoot()
 				}
 				else if (elementName == userSpaceShipName) {
-					if (self.nodeAtPoint(location) == self.userSpaceShip!.spaceShip) {
+					if (self.atPoint(location) == self.userSpaceShip!.spaceShip) {
 						self.fingureIsOnUserSpaceShip = true
 					}
 				}
@@ -138,19 +138,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		}
 	}
 	
-	override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 		self.fingureIsOnUserSpaceShip = true
 	}
 	
-	override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+	override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
 		self.fingureIsOnUserSpaceShip = true
 	}
 	
-	override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
 		if (self.fingureIsOnUserSpaceShip) {
 			if let touch = touches.first as UITouch? {
-				let touchLoc = touch.locationInNode(self)
-				let prevTouchLoc = touch.previousLocationInNode(self)
+				let touchLoc = touch.location(in: self)
+				let prevTouchLoc = touch.previousLocation(in: self)
 				//let ninja = self.childNodeWithName(playCategoryName) as! SKSpriteNode
 				var newYPos = self.userSpaceShip!.position.y + (touchLoc.y - prevTouchLoc.y)
 				var newXPos = self.userSpaceShip!.position.x + (touchLoc.x - prevTouchLoc.x)
@@ -162,28 +162,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 				newXPos = min(newXPos, self.size.width - self.userSpaceShip!.size.width / 2)
 				
 				//set new X and Y for your sprite.
-				self.userSpaceShip!.position = CGPointMake(newXPos, newYPos)
+				self.userSpaceShip!.position = CGPoint(x: newXPos, y: newYPos)
 			}
 		}
 	}
 	
-	private func didMenu() {
+	fileprivate func didMenu() {
 		if let scene = GameStartScene(fileNamed:"GameStartScene") {
 			scene.size = self.size
-			scene.scaleMode = .AspectFill
+			scene.scaleMode = .aspectFill
 			
 			self.removeAllActions()
 			self.removeAllChildren()
-			let transition = SKTransition.fadeWithDuration(2)
+			let transition = SKTransition.fade(withDuration: 2)
 			
 			self.view?.presentScene(scene, transition: transition)
 		}
 	}
 	
-	override func update(currentTime: CFTimeInterval) {
+	override func update(_ currentTime: TimeInterval) {
 	}
 	
-	internal func didBeginContact(contact: SKPhysicsContact) {
+	internal func didBegin(_ contact: SKPhysicsContact) {
 		do {
 			var firstBody: SKPhysicsBody?
 			var secondBody: SKPhysicsBody?
@@ -199,31 +199,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 				let enemyObject: SKSpriteNode = secondBody!.node as! SKSpriteNode
 				let userObject: SKSpriteNode = firstBody!.node as! SKSpriteNode
 				
-				if ((firstBody!.categoryBitMask & PhysicsCategory.UserShip.rawValue != 0) &&
-					(secondBody!.categoryBitMask & PhysicsCategory.UFO.rawValue != 0)) {
+				if ((firstBody!.categoryBitMask & PhysicsCategory.userShip.rawValue != 0) &&
+					(secondBody!.categoryBitMask & PhysicsCategory.ufo.rawValue != 0)) {
 					self.userSpaceShip!.doShipExplotion()
 					self.ufoSpaceShip!.ufoDidCollideWithShip(enemyObject)
 					self.removeUserLife()
 				}
-				else if ((firstBody!.categoryBitMask & PhysicsCategory.UserShip.rawValue != 0) &&
-					(secondBody!.categoryBitMask & PhysicsCategory.Enemy.rawValue != 0)) {
+				else if ((firstBody!.categoryBitMask & PhysicsCategory.userShip.rawValue != 0) &&
+					(secondBody!.categoryBitMask & PhysicsCategory.enemy.rawValue != 0)) {
 					self.userSpaceShip!.doShipExplotion()
 					self.enemySpaceShip!.enemyDidCollideWithShip(enemyObject)
 					self.removeUserLife()
 				}
-				else if ((firstBody!.categoryBitMask & PhysicsCategory.UserShip.rawValue != 0) &&
-					(secondBody!.categoryBitMask & PhysicsCategory.EnemyShot.rawValue != 0)) {
+				else if ((firstBody!.categoryBitMask & PhysicsCategory.userShip.rawValue != 0) &&
+					(secondBody!.categoryBitMask & PhysicsCategory.enemyShot.rawValue != 0)) {
 					self.userSpaceShip!.doShipExplotion()
 					self.removeUserLife()
 				}
-				else if ((firstBody!.categoryBitMask & PhysicsCategory.Shot.rawValue != 0) &&
-					(secondBody!.categoryBitMask & PhysicsCategory.Enemy.rawValue != 0)) {
+				else if ((firstBody!.categoryBitMask & PhysicsCategory.shot.rawValue != 0) &&
+					(secondBody!.categoryBitMask & PhysicsCategory.enemy.rawValue != 0)) {
 					self.userSpaceShip!.disposeShot(userObject)
 					self.enemySpaceShip!.projectileDidCollideWithEnemy(userObject, enemy: enemyObject)
 					self.enemyHitted()
 				}
-				else if ((firstBody!.categoryBitMask & PhysicsCategory.Shot.rawValue != 0) &&
-					(secondBody!.categoryBitMask & PhysicsCategory.UFO.rawValue != 0)) {
+				else if ((firstBody!.categoryBitMask & PhysicsCategory.shot.rawValue != 0) &&
+					(secondBody!.categoryBitMask & PhysicsCategory.ufo.rawValue != 0)) {
 					self.userSpaceShip!.disposeShot(userObject)
 					self.ufoSpaceShip!.projectileDidCollideWithUFO(userObject, ufo: enemyObject)
 					self.ufoHitted()
@@ -235,50 +235,50 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		//		}
 	}
 	
-	private func removeUserLife() {
+	fileprivate func removeUserLife() {
 		if(self.userLife!.removeUserLife() <= 0) {
 			self.didLose()
 		}
 	}
 	
-	private func enemyHitted() {
+	fileprivate func enemyHitted() {
 		self.addPointsToHits(1)
 		self.didWon()
 	}
 	
-	private func ufoHitted() {
+	fileprivate func ufoHitted() {
 		self.addPointsToHits(3)
 		self.didWon()
 	}
 	
-	private func didLose() {
+	fileprivate func didLose() {
 		if let scene = GameLostScene(fileNamed:"GameLostScene") {
 			scene.size = self.size
-			scene.scaleMode = .AspectFill
+			scene.scaleMode = .aspectFill
 			self.removeAllActions()
 			self.removeAllChildren()
 			
-			let transition = SKTransition.fadeWithDuration(2)
+			let transition = SKTransition.fade(withDuration: 2)
 			self.view?.presentScene(scene, transition: transition)
 		}
 	}
 	
-	private func addPointsToHits(points:Int) {
+	fileprivate func addPointsToHits(_ points:Int) {
 		hitsLabelPoints += points
 		let pointsText = NSString(format: "%03d", hitsLabelPoints)
 		
 		pointsCounter.text = "\(hitsLabelText) \(pointsText)"
 	}
 	
-	private func didWon() {
+	fileprivate func didWon() {
 		if(hitsLabelPoints >= 100) {
 			if let scene = GameWonScene(fileNamed:"GameWonScene") {
 				scene.size = self.size
-				scene.scaleMode = .AspectFill
+				scene.scaleMode = .aspectFill
 				self.removeAllActions()
 				self.removeAllChildren()
 				
-				let transition = SKTransition.fadeWithDuration(2)
+				let transition = SKTransition.fade(withDuration: 2)
 				self.view?.presentScene(scene, transition: transition)
 			}
 		}

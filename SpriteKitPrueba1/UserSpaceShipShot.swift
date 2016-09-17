@@ -10,12 +10,12 @@ import Foundation
 import SpriteKit
 
 
-public class UserSpaceShipShoot {
-	private let shootScale:CGFloat = CGFloat(1.2)
-	private var gameScene: SKScene
-	private var userSpaceShip: SKSpriteNode
-	public let shottingSpeed = 0.3
-	public var isShootEnabled = true
+open class UserSpaceShipShoot {
+	fileprivate let shootScale:CGFloat = CGFloat(1.2)
+	fileprivate var gameScene: SKScene
+	fileprivate var userSpaceShip: SKSpriteNode
+	open let shottingSpeed = 0.3
+	open var isShootEnabled = true
 	
 	
 	public init(gameScene: SKScene, userSpaceShip: SKSpriteNode) {
@@ -23,13 +23,13 @@ public class UserSpaceShipShoot {
 		self.userSpaceShip = userSpaceShip
 	}
 	
-	public func disposeShot(shoot: SKSpriteNode) {
-		shoot.hidden = true
-		shoot.position.x = CGRectGetMidX(self.gameScene.frame) - CGRectGetMaxX(self.gameScene.frame)
+	open func disposeShot(_ shoot: SKSpriteNode) {
+		shoot.isHidden = true
+		shoot.position.x = self.gameScene.frame.midX - self.gameScene.frame.maxX
 	}
 	
 	
-	public func addShoot() {
+	open func addShoot() {
 		if(self.isShootEnabled == false) {
 			return
 		}
@@ -43,15 +43,15 @@ public class UserSpaceShipShoot {
 		shoot.position = location
 		shoot.zPosition = -500
 		
-		shoot.physicsBody = SKPhysicsBody(rectangleOfSize: shoot.size)
-		shoot.physicsBody?.dynamic = true
-		shoot.physicsBody?.categoryBitMask = PhysicsCategory.Shot.rawValue
-		shoot.physicsBody?.contactTestBitMask = PhysicsCategory.Enemy.rawValue
-		shoot.physicsBody?.collisionBitMask = PhysicsCategory.None.rawValue
+		shoot.physicsBody = SKPhysicsBody(rectangleOf: shoot.size)
+		shoot.physicsBody?.isDynamic = true
+		shoot.physicsBody?.categoryBitMask = PhysicsCategory.shot.rawValue
+		shoot.physicsBody?.contactTestBitMask = PhysicsCategory.enemy.rawValue
+		shoot.physicsBody?.collisionBitMask = PhysicsCategory.none.rawValue
 		shoot.physicsBody?.usesPreciseCollisionDetection = true
 		
-		let moveAction:SKAction = SKAction.moveToY(CGRectGetMaxY(self.gameScene.frame), duration: 1)
-		let anotherShotAction:SKAction = SKAction.customActionWithDuration(shottingSpeed, actionBlock: { (node: SKNode!, elapsedTime: CGFloat) -> Void in
+		let moveAction:SKAction = SKAction.moveTo(y: self.gameScene.frame.maxY, duration: 1)
+		let anotherShotAction:SKAction = SKAction.customAction(withDuration: shottingSpeed, actionBlock: { (node: SKNode!, elapsedTime: CGFloat) -> Void in
 			if(elapsedTime >= CGFloat(self.shottingSpeed)) {
 				self.addShoot()
 			}
@@ -59,10 +59,10 @@ public class UserSpaceShipShoot {
 		
 		self.gameScene.addChild(shoot)
 		
-		shoot.runAction(SKAction.sequence([SKAction.playSoundFileNamed("shot.wav",waitForCompletion:false), moveAction, SKAction.removeFromParent()]))
+		shoot.run(SKAction.sequence([SKAction.playSoundFileNamed("shot.wav",waitForCompletion:false), moveAction, SKAction.removeFromParent()]))
 		
 		if(isShootEnabled) {
-			self.gameScene.runAction(SKAction.sequence([ SKAction.waitForDuration(shottingSpeed), anotherShotAction]))
+			self.gameScene.run(SKAction.sequence([ SKAction.wait(forDuration: shottingSpeed), anotherShotAction]))
 		}
 		
 		self.isShootEnabled = true

@@ -9,12 +9,12 @@
 import Foundation
 import SpriteKit
 
-public class SpaceShipBase {
+open class SpaceShipBase {
 	internal var spaceShip: SKSpriteNode = SKSpriteNode()
 	internal let spaceShipScale: CGFloat = CGFloat(2.5)
-	internal let spaceShipExplosionTime: NSTimeInterval = NSTimeInterval(1)
-	internal let timeForExplotionSound: NSTimeInterval = NSTimeInterval(5)
-	internal let timePerFrameAnimation: NSTimeInterval = NSTimeInterval(0.025)
+	internal let spaceShipExplosionTime: TimeInterval = TimeInterval(1)
+	internal let timeForExplotionSound: TimeInterval = TimeInterval(5)
+	internal let timePerFrameAnimation: TimeInterval = TimeInterval(0.025)
 	internal var gameScene: SKScene
 	
 	
@@ -23,11 +23,11 @@ public class SpaceShipBase {
 	}
 	
 	internal func playExplotionSound() {
-		self.gameScene.runAction(SKAction.sequence([SKAction.playSoundFileNamed("explosion.wav", waitForCompletion: true)]))
+		self.gameScene.run(SKAction.sequence([SKAction.playSoundFileNamed("explosion.wav", waitForCompletion: true)]))
 	}
 	
-	internal func runAction(action: SKAction, completion block: () -> Void){
-		self.spaceShip.runAction(action, completion: block)
+	internal func runAction(_ action: SKAction, completion block: @escaping () -> Void){
+		self.spaceShip.run(action, completion: block)
 	}
 	
 	internal func addSpaceShip() {

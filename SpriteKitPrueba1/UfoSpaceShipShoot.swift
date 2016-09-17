@@ -10,12 +10,12 @@ import Foundation
 import SpriteKit
 
 
-public class UfoSpaceShipShoot {
-	private let shootScale:CGFloat = CGFloat(2)
-	private var gameScene: SKScene
-	private var userSpaceShip: SKSpriteNode
-	public let shottingSpeed = 0.3
-	public var isShootEnabled = true
+open class UfoSpaceShipShoot {
+	fileprivate let shootScale:CGFloat = CGFloat(2)
+	fileprivate var gameScene: SKScene
+	fileprivate var userSpaceShip: SKSpriteNode
+	open let shottingSpeed = 0.3
+	open var isShootEnabled = true
 	
 	
 	public init(gameScene: SKScene, userSpaceShip: SKSpriteNode) {
@@ -23,12 +23,12 @@ public class UfoSpaceShipShoot {
 		self.userSpaceShip = userSpaceShip
 	}
 	
-	public func disposeShot(shoot: SKSpriteNode) {
-		shoot.hidden = true
-		shoot.position.x = CGRectGetMidX(self.gameScene.frame) - CGRectGetMaxX(self.gameScene.frame)
+	open func disposeShot(_ shoot: SKSpriteNode) {
+		shoot.isHidden = true
+		shoot.position.x = self.gameScene.frame.midX - self.gameScene.frame.maxX
 	}
 	
-	public func addShoot(ufoSpaceShip: SKSpriteNode) {
+	open func addShoot(_ ufoSpaceShip: SKSpriteNode) {
 		let ufoSpaceShipRadius = (ufoSpaceShip.size.height / 2)
 		let location = CGPoint(x: ufoSpaceShip.position.x + ufoSpaceShipRadius, y: ufoSpaceShip.position.y -  ufoSpaceShipRadius)
 		let shoot = SKSpriteNode(imageNamed: "ufoShoot")
@@ -38,16 +38,16 @@ public class UfoSpaceShipShoot {
 		shoot.position = location
 		shoot.zPosition = -500
 		
-		shoot.physicsBody = SKPhysicsBody(rectangleOfSize: shoot.size)
-		shoot.physicsBody?.dynamic = true
-		shoot.physicsBody?.categoryBitMask = PhysicsCategory.EnemyShot.rawValue
-		shoot.physicsBody?.contactTestBitMask = PhysicsCategory.UserShip.rawValue
-		shoot.physicsBody?.collisionBitMask = PhysicsCategory.None.rawValue
+		shoot.physicsBody = SKPhysicsBody(rectangleOf: shoot.size)
+		shoot.physicsBody?.isDynamic = true
+		shoot.physicsBody?.categoryBitMask = PhysicsCategory.enemyShot.rawValue
+		shoot.physicsBody?.contactTestBitMask = PhysicsCategory.userShip.rawValue
+		shoot.physicsBody?.collisionBitMask = PhysicsCategory.none.rawValue
 		shoot.physicsBody?.usesPreciseCollisionDetection = true
 		
-		let moveAction:SKAction = SKAction.moveTo(self.userSpaceShip.position, duration: 2)		
+		let moveAction:SKAction = SKAction.move(to: self.userSpaceShip.position, duration: 2)		
 		self.gameScene.addChild(shoot)
 		
-		shoot.runAction(SKAction.sequence([SKAction.playSoundFileNamed("shot.wav",waitForCompletion:false), moveAction, SKAction.removeFromParent()]))
+		shoot.run(SKAction.sequence([SKAction.playSoundFileNamed("shot.wav",waitForCompletion:false), moveAction, SKAction.removeFromParent()]))
 	}
 }

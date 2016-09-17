@@ -10,14 +10,14 @@ import Foundation
 import SpriteKit
 
 
-public class UserLife {
-	private let separator = 40
-	private let userLifesMaxCount = 3
-	private var userLifesCounter = 3
-	private var userLifeShips:[SKSpriteNode] = []
+open class UserLife {
+	fileprivate let separator = 40
+	fileprivate let userLifesMaxCount = 3
+	fileprivate var userLifesCounter = 3
+	fileprivate var userLifeShips:[SKSpriteNode] = []
 	
-	private var gameScene: SKScene
-	private var userSpaceShip: UserSpaceShip
+	fileprivate var gameScene: SKScene
+	fileprivate var userSpaceShip: UserSpaceShip
 	
 	
 	public init(gameScene: SKScene, userSpaceShip: UserSpaceShip) {
@@ -25,13 +25,13 @@ public class UserLife {
 		self.userSpaceShip = userSpaceShip
 	}
 	
-	public func addUserLifes(){
+	open func addUserLifes(){
 		for userLifeItem in 1...userLifesMaxCount {
 			addUserLifeImage(userLifeItem)
 		}
 	}
 	
-	public func addUserLifeImage(userLifeItem: Int){
+	open func addUserLifeImage(_ userLifeItem: Int){
 		let location = CGPoint(x: self.separator * userLifeItem, y: Int(self.gameScene.frame.height) - (self.separator / 2))
 		let userLifeShip = SKSpriteNode(imageNamed:"UserLife")
 		
@@ -44,11 +44,11 @@ public class UserLife {
 		self.gameScene.addChild(userLifeShip)
 	}
 	
-	public func removeUserLife() -> Int {
+	open func removeUserLife() -> Int {
 		self.userLifesCounter -= 1
 		
 		if(self.userLifesCounter >= 0) {
-			self.userLifeShips[self.userLifesCounter].runAction(SKAction.fadeOutWithDuration(1))
+			self.userLifeShips[self.userLifesCounter].run(SKAction.fadeOut(withDuration: 1))
 		}
 		
 		return self.userLifesCounter
