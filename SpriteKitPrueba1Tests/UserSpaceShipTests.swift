@@ -25,7 +25,7 @@ class UserSpaceShipTests: XCTestCase {
 	
 	/// FIXTURE {
 	
-	fileprivate let frame = CGRect()
+	fileprivate let gameScene = SKScene()
 	fileprivate let userSpaceShipInternalMock = UserSpaceShipInternalMock()
 	
 	/// } FIXTURE
@@ -34,7 +34,7 @@ class UserSpaceShipTests: XCTestCase {
 	override func setUp() {
 		super.setUp()
 		
-		sut = UserSpaceShip(gameScene: self.frame)
+		sut = UserSpaceShip(gameScene: self.gameScene)
 	}
 	
 	override func tearDown() {
@@ -43,7 +43,7 @@ class UserSpaceShipTests: XCTestCase {
 	
 	func test_init_withFrame_SetsItToItsInternalFrameProperty() {
 		
-		sut = UserSpaceShip(gameScene: self.frame)
+		sut = UserSpaceShip(gameScene: self.gameScene)
 		
 		XCTAssertEqual(self.gameScene, sut.gameScene)
 	}
